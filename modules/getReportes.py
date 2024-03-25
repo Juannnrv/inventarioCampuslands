@@ -5,7 +5,7 @@ import requests
 from tabulate import tabulate
 
 
-def listarActivos():
+def Activos():
     peticion = requests.get('http://154.38.171.54:5502/activos')
     data = peticion.json()
     return data
@@ -44,6 +44,11 @@ def CategoriasActivo():
         except KeyboardInterrupt:
             print('\nRegresando al menú de reportes...')
 
+def ActivosDadosDeBaja():
+    peticion = requests.get('http://154.38.171.54:5502/activos?idEstado=2')
+    data = peticion.json()
+    return data
+
 #def listarActivosDebaja():
 #http://url/activos?estado=2
 
@@ -71,7 +76,7 @@ def menuReportes():
                 opcion = int(opcion)
                 if opcion >= 0 and opcion <= 6:
                     if opcion == 1:
-                        print(tabulate(listarActivos(), headers='keys', tablefmt='fancy grid'))
+                        print(tabulate(Activos(), headers='keys', tablefmt='fancy grid'))
                         input('Presiona la tecla Enter para continuar...')
                     elif opcion == 2:
                         while True:
@@ -96,12 +101,16 @@ def menuReportes():
                             except KeyboardInterrupt:
                                 print()
                     elif opcion == 3:
-                        listarActivosDeBaja()
-                    elif opcion == 4:
-                        listarActivosAsignacion()
-                    elif opcion == 5:
-                        listarHistorialMovimientoActivos()
-                    elif opcion == 6:
+                        print(tabulate(ActivosDadosDeBaja(), headers='keys', tablefmt='fancy grid'))
+                        input('Presiona la tecla Enter para continuar...')
+
+                       # STANDBY
+
+                    # elif opcion == 4:
+                    #     listarActivosAsignacion()
+                    # elif opcion == 5:
+                    #     listarHistorialMovimientoActivos()
+                    # elif opcion == 6:
                         break
 
         except KeyboardInterrupt:

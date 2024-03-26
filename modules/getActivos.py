@@ -275,7 +275,7 @@ def editActivos(id):
                                 opcion = int(opcion)
                                 if opcion >= 1 and opcion <= 14:
                                     if opcion == 1:
-                                        NroItem = input('\nIngrese el número de item del activo => ')
+                                        NroItem = input('\nIngrese el nuevo número de item del activo => ')
                                         if re.match(r'[0-9]+$', NroItem):
                                             NroItem = int(NroItem)
                                             data[0]['NroItem'] = NroItem
@@ -287,7 +287,7 @@ def editActivos(id):
                                     if opcion == 3:
                                         # Serial
                                         print("""
-                                        ¿Desea asignarle un número de serial a un activo ya existente?
+                                        ¿Desea asignarle un nuevo número de serial a un activo ya existente?
                                 
                                                                 1. Si
                                                                 2. No
@@ -298,7 +298,7 @@ def editActivos(id):
                                                 opcion = int(opcion)
                                                 if opcion >= 1 and opcion <= 2:
                                                     if opcion == 1:
-                                                        NroSerial = input('\nIngrese la número del serial asignado al activo => ')
+                                                        NroSerial = input('\nIngrese el nuevo número del serial asignado al activo => ')
                                                         if re.match(r'^[a-zA-Z0-9\s-]+$', NroSerial):
                                                             data[0]['NroSerial'] = NroSerial
                                                     elif opcion == 2:
@@ -309,24 +309,24 @@ def editActivos(id):
                                         except KeyboardInterrupt:
                                             print()
                                     if opcion == 4:
-                                        CodCampus = input('\nIngrese el código de Campus que vas a asignar al activo => ')
+                                        CodCampus = input('\nIngrese el nuevo código de Campus que vas a asignar al activo => ')
                                         if re.match(r'^[A-Z]{3}[0-9]{3}$', CodCampus):
                                             data[0]['CodCampus'] = CodCampus
                                     if opcion == 5:
-                                        NroFormulario = input('\nIngrese el número de formulario del activo => ')
+                                        NroFormulario = input('\nIngrese el nuevo número de formulario del activo => ')
                                         if re.match(r'[0-9]+$', NroFormulario):
                                             NroFormulario = int(NroFormulario)
                                             data[0]['NroFormulario'] = NroFormulario
                                     if opcion == 6:
-                                        Nombre = input('\nIngrese el nombre del activo => ')
+                                        Nombre = input('\nIngrese el nuevo nombre del activo => ')
                                         if re.match(r'^[a-zA-Z0-9\s-]+$', Nombre):
                                             data[0]['Nombre'] = Nombre
                                     if opcion == 7:
-                                        Proveedor = input('\nIngrese el proveedor del activo => ')
+                                        Proveedor = input('\nIngrese el nuevo proveedor del activo => ')
                                         if re.match(r'^[a-zA-Z0-9\s-]+$', Proveedor):
                                             data[0]['Proveedor'] = Proveedor
                                     if opcion == 8:
-                                        EmpresaResponsable = input('\nIngrese la empresa responsable del activo => ')
+                                        EmpresaResponsable = input('\nIngrese la nueva empresa responsable del activo => ')
                                         if re.match(r'^[a-zA-Z0-9\s-]+$', EmpresaResponsable):
                                             data[0]['EmpresaResponsable'] = EmpresaResponsable
                                     if opcion == 9:
@@ -458,23 +458,22 @@ def editActivos(id):
                                                     if opcion == 4:
                                                         data[0]['idEstado'] = '3'
                                                     else:
-                                                        print('\nPor favor, seleccione una opción válida (1 o 8)')
+                                                        print('\nPor favor, seleccione una opción válida (0 o 3)')
                                                         break
                                         except KeyboardInterrupt:
                                             print()
-
-
+                                            
                                         else:
                                             print('\nNo cumple con el formato esperado')
                                             break
-                                        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data).encode("UTF-8"))
-                                        res = peticion.json()
-                                        return [res]
+                                
+                            break
 
                         elif opcion == 2:
                             break
                         else:
                             print('\nPor favor, seleccione una opción válida (1 o 2)')
+                            break
 
             except Exception as error:
                 print('---ERROR---')
@@ -483,6 +482,11 @@ def editActivos(id):
     
     # Activos['historialActivos'] = []
     # Activos['asignaciones'] = [] 
+            
+    peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+    res = peticion.json()
+    input ('\nDato editado satisfactoriamente')
+    return [res]
 
 
 
@@ -519,7 +523,7 @@ def menuActivos():
                     if opcion == 1:
                         postActivos()
                     elif opcion == 2:
-                        idActivo = input('Ingrese el ID del activo que desea editar => ')
+                        idActivo = input('\nIngrese el ID del activo que desea editar => ')
                         print(tabulate(editActivos(idActivo) , headers='keys', tablefmt='fancy_grid'))
                     elif opcion == 3:
                         deleteActivos()

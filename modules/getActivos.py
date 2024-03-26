@@ -50,7 +50,6 @@ def postActivos():
                                             raise Exception('---> El número de item del activo no cumple con el estandar establecido')
                                         break
                                 
-                                if not Activos.get('CodTransaccion'):
                                     CodTransaccion = input('Ingrese el código de transacción del activo => ')
                                     if CodTransaccion.isdigit():
                                         CodTransaccion = int(CodTransaccion)
@@ -86,7 +85,6 @@ def postActivos():
                                     if re.match(r'^[A-Z]{3}[0-9]{3}$', CodCampus):
                                         Activos['CodCampus'] = CodCampus
 
-                                if not Activos.get('NroFormulario'):
                                     NroFormulario = input('Ingrese el número de formulario asignado al activo => ')
                                     if NroFormulario.isdigit():
                                         NroFormulario = int(NroFormulario)
@@ -97,18 +95,15 @@ def postActivos():
                                     if re.match(r'^[a-zA-Z0-9\s-]+$', Nombre):
                                         Activos['Nombre'] = Nombre
 
-                                if not Activos.get('Proveedor'):
                                     Proveedor = input('Ingrese el proveedor del activo => ')
                                     if re.match(r'[A-Za-z]+\s[A-Za-z\s]+$', Proveedor):
                                         Activos['Proveedor'] = Proveedor
-                                
-                                if not Activos.get('EmpresaResponsable'):
+
                                     EmpresaResponsable = input('Ingrese el nombre de la empresa responsable del activo => ')
                                     if re.match(r'[A-Za-z]+$', EmpresaResponsable):
                                         Activos['EmpresaResponsable'] = EmpresaResponsable
 
                                 # Marca
-                                if not Activos.get('idMarca'):
                                     print("""
                                                 Marcas
                     
@@ -141,7 +136,6 @@ def postActivos():
                                                 Activos['idMarca'] = '7' 
                             
                                 # Categoría
-                                if not Activos.get('idCategoria'):
                                     print("""
                                             Categorías
                     
@@ -161,7 +155,6 @@ def postActivos():
                                                 Activos['idCategoria'] = '3'
                                 
                                 # Tipo
-                                if not Activos.get('idTipo'):
                                     print("""
                                             Tipos de Activos
                     
@@ -201,29 +194,6 @@ def postActivos():
                                     if ValorUnitario.isdigit():
                                         Activos['ValorUnitario'] = ValorUnitario
 
-                                # Estado
-                                if not Activos.get('idEstado'):
-                                    print("""
-                                                Estados
-                    
-                                        0. No asignado
-                                        1. Asignado
-                                        2. Dado de baja por daño
-                                        3. En reparación y/o garantia
-                                            """)
-                                    opcion = input('Ingrese el id asignado al estado de activo => ')
-                                    if re.match(r'[0-9]+$', opcion):
-                                        opcion = int(opcion)
-                                        if opcion >= 0 and opcion <= 2:
-                                            if opcion == 0:
-                                                Activos['idEstado'] = '0'
-                                            elif opcion == 1:
-                                                Activos['idEstado'] = '1'
-                                            elif opcion == 2:
-                                                Activos['idEstado'] = '2'
-                                            elif opcion == 3:
-                                                Activos['idEstado'] = '3'
-
                                 else:
                                     print('\nNo cumple con el formato esperado')
                                     break
@@ -231,6 +201,8 @@ def postActivos():
                             except KeyboardInterrupt:
                                 print('\nRegresando al menú principal...')
                                 break
+
+                        break
 
                     elif opcion == 2:
                         break 
@@ -240,14 +212,17 @@ def postActivos():
             print(error)
             break
         
-        Activos['historialActivos'] = []
-        Activos['asignaciones'] = []
+    Activos['idEstado'] = "0"
+    Activos['historialActivos'] = []
+    Activos['asignaciones'] = []
+    
 
     headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-    peticion = requests.post('http://154.38.171.54:5502/activos', headers=headers, data=json.dumps(Activos))
+    peticion = requests.post('http://154.38.171.54:5502/activos', headers=headers, data=json.dumps(Activos, indent=4))
     res = peticion.json()
     res ['Mensaje'] = 'Activo guardado satisfactoriamente'
     return [res]
+    
                         
     
 

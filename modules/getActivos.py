@@ -201,18 +201,16 @@ def postActivos():
                                         Activos['ValorUnitario'] = ValorUnitario
 
                                     else:  
-                                        print("Lo siento no cumple con el formato esperado.")
-                                        continue  
+                                        raise Exception ("Lo siento no cumple con el formato esperado.")
+                                    break 
 
                                 else:
-                                    print('\nNo cumple con el formato esperado')
+                                    raise Exception ('\nNo cumple con el formato esperado')
                                     break
 
                             except KeyboardInterrupt:
                                 print('\nRegresando al menú principal...')
                                 break
-
-                        input ('Activo guardado satisfactoriamente')
 
                         break
 
@@ -232,7 +230,9 @@ def postActivos():
     headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
     peticion = requests.post('http://154.38.171.54:5502/activos', headers=headers, data=json.dumps(Activos, indent=4))
     res = peticion.json()
-    res ['Mensaje'] = 'Activo guardado satisfactoriamente'
+    res ['Mensaje'] = '\nActivo guardado satisfactoriamente'
+    print(res['Mensaje'])
+    input('\nPresione Enter para continuar...')
     return [res]
 
 def editActivos(id):
@@ -458,18 +458,16 @@ def editActivos(id):
                                                         data[0]['idEstado'] = '2'
                                                     if opcion == 3:
                                                         data[0]['idEstado'] = '3'
-                                                    else:
-                                                        print('\nPor favor, seleccione una opción válida (0 o 3)')
-                                                        break
+                                                else:
+                                                    print('\nPor favor, seleccione una opción válida (0 o 3)')
+                                                    break
 
                                         except KeyboardInterrupt:
                                             print()
                                             
-                                        else:
-                                            print('\nNo cumple con el formato esperado')
-                                            break
-
-                            input('\nDato editado satisfactoriamente')
+                                    else:
+                                        print('\nNo cumple con el formato esperado')
+                                        break
 
                             break
 
@@ -489,11 +487,14 @@ def editActivos(id):
             
     peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
     res = peticion.json()
-    res['Mensaje'] = 'Dato editado satisfactoriamente'
+    res['Mensaje'] = '\nDato editado satisfactoriamente'
+    print(res['Mensaje'])
+    input('\nPresione Enter para continuar...')
     return [res]
 
 def deleteActivos(id): 
     # No se elimina solo se cambia el estado del activo a NO ASIGNADO
+
     data = ActivosId(id)
     if len(data):
         while True:
@@ -515,12 +516,12 @@ def deleteActivos(id):
                             data[0]['idEstado'] = "0"
                         if opcion == 2:
                             break
-                        else:
-                            print('\nPor favor, seleccione una opción válida (1 o 2)')
-                            break
+                    else:
+                        raise Exception ('\nPor favor, seleccione una opción válida (1 o 2)')
+                        break
                 else:
-                    print('\nPor favor, seleccione una opción válida (1 o 2)')
-                    break
+                    raise Exception('\nPor favor, seleccione una opción válida 1 o 2')
+                break
 
             except Exception as error:
                 print('---ERROR---')
@@ -529,7 +530,9 @@ def deleteActivos(id):
 
     peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
     res = peticion.json()
-    res['Mensaje'] = 'Dato editado satisfactoriamente'
+    res['Mensaje'] = '\nDato eliminado satisfactoriamente'
+    print(res['Mensaje'])
+    input('\nPresione Enter para continuar...')
     return [res]
 
 
@@ -560,8 +563,9 @@ def menuActivos():
                         print(tabulate(deleteActivos(idActivo), headers='keys', tablefmt='fancy_grid'))
                     elif opcion == 4:
                         idActivo = input('\nIngrese el ID del activo que deseas buscar => ')
-                        print(tabulate(ActivosId(idActivo), headers='keys', tablefmt='fancy grid'))
-                        input('Presiona la tecla Enter para continuar...')
+                        print()
+                        print(tabulate(ActivosId(idActivo), headers='keys', tablefmt='fancy_grid'))
+                        input('\nPresiona la tecla Enter para continuar...')
                     elif opcion == 5:
                         break
                     

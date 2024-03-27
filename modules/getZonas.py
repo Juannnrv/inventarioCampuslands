@@ -7,6 +7,7 @@ def Zonas():
     peticion = requests.get('http://154.38.171.54:5502/zonas')
     data = peticion.json()
     return data
+
 def ZonasID(id):
     for val in Zonas():
         if val.get('id') == id:
@@ -50,20 +51,20 @@ def postZonas():
                             #             break
 
                                     if not Zonas.get('nombreZona'):
-                                        nombre = input('Ingrese el nombre de la zona en Campuslands => ')
-                                        if re.match(r'^[A-Z]{1}[a-z]+$', nombre):
-                                            Zonas['nombreZona'] = nombre
+                                        nombreZona = input('\nIngrese el nombre de la zona en Campuslands => ')
+                                        if re.match(r'^[A-Z]{1}[a-z]+$', nombreZona):
+                                            Zonas['nombreZona'] = nombreZona
 
-                                        capacidad = input('Ingrese la capacidad máxima de la zona en Campuslands => ')
-                                        if capacidad.isdigit():
-                                            capacidad = int(capacidad)
-                                            Zonas['capacidad'] = capacidad
+                                        totalCapacidad = input('Ingrese la capacidad máxima de la zona en Campuslands => ')
+                                        if totalCapacidad.isdigit():
+                                            totalCapacidad = int(totalCapacidad)
+                                            Zonas['totalCapacidad'] = totalCapacidad
                                             
                                             headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
                                             peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
                                             res = peticion.json()
-                                            res['Mensaje'] = 'Zona guardada satisfactoriamente'
-                                            print(res['\nMensaje'])  
+                                            res['Mensaje'] = '\nZona guardada satisfactoriamente'
+                                            print(res['Mensaje'])  
                                             input('\nPresione Enter para continuar...')
                                             return [res]
 
@@ -86,19 +87,12 @@ def postZonas():
                 print(error)
                 break
 
-        headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-        peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
-        res = peticion.json()
-        res ['Mensaje'] = 'Zona guardada satisfactoriamente'
-        return [res]
-
-
 def deleteZonas(id):
     while True:
         while True:
             os.system('clear')
             print("""
-            A continuación agregaras una nueva zona en Campuslands
+            A continuación eliminaras una zona existente en Campuslands
             
                             ¿Deseas continuar?
         
@@ -114,7 +108,8 @@ def deleteZonas(id):
                             peticion = requests.delete(f'http://154.38.171.54:5502/zonas/{id}')
                             res = peticion.json()
                             res['Mensaje'] = 'Zona eliminada satisfactoriamente'
-                            print(res['\nMensaje'])
+                            print()
+                            print(res['Mensaje'])
                             input('\nPresione la tecla Enter para poder continuar...')
                             return [res]
                         elif opcion == 2:
@@ -128,9 +123,72 @@ def deleteZonas(id):
                 print(error)
                 break
 
+def editZonas(id):
+    data = ZonasID(id)
+    if len(data):
+        while True:
+            os.system('clear')
+            print("""
+            A continuación editaras un dato de una zona existente en Campuslands
+            
+                                ¿Deseas continuar?
+            
+                                    1. Si
+                                    2. No
+    """)
+            opcion = input('\nSeleccione una de las opciones => ')
+            try:
+                if re.match(r'[0-9]+$', opcion):
+                    opcion = int(opcion)
+                    if opcion >= 1 and opcion <= 2:
+                        if opcion == 1:
+                            print("""
+                    ¿Qué dato deseas actualizar?
+
+                1. Nombre de la zona
+                2. Capacidad maxima de la zona
+                                    """)
+                            opcion = int(input('\nSeleccione una de las opciones => '))
+                            if opcion == 1:
+                                nombre = input('Ingrese el nuevo nombre de la zona en Campuslands => ')
+                                if re.match(r'^[A-Z]{1}[a-z]+$', nombre):
+                                    data[0]['nombreZona'] = nombre                              
+                            if opcion == 2:
+                                totalCapacidad = input('Ingrese la nueva capacidad máxima de la zona en Campuslands => ')
+                                if totalCapacidad.isdigit():
+                                    totalCapacidad = int(totalCapacidad)
+                                    data[0]['totalCapacidad'] = totalCapacidad
+
+                                    # peticion = requests.put(f"http://154.38.171.54:5502/zonas/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                                    # res = peticion.json()
+                                    # res['Mensaje'] = '\nEl dato fue editado satisfactoriamente'
+                                    # print()
+                                    # print(res['Mensaje'])
+                                    # input('\nPresione la tecla Enter para poder continuar...')
+                                    # return [res]
+                                
+                        elif opcion == 2:
+                            break
+                        else:
+                            raise Exception ('---> El dato ingresado debe ser 1 o 2 ')
+                else:
+                    raise Exception ('---> El dato ingresado debe ser 1 o 2 ')     
+
+                peticion = requests.put(f"http://154.38.171.54:5502/zonas/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                res = peticion.json()
+                res['Mensaje'] = '\nEl dato fue editado satisfactoriamente'
+                print()
+                print(res['Mensaje'])
+                input('\nPresione la tecla Enter para poder continuar...')
+                return [res]   
+            
+            except Exception as error:
+                print('---ERROR---')
+                print(error)
+                break
 
 
-# def editZonas():
+
 
 
 # def searchAsignacionActivos():
@@ -157,10 +215,11 @@ def menuZonas():
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
                         postZonas()
-                    # if opcion == 2:
-                        #editZonas()
+                    if opcion == 2:
+                        idedit = input('\nIngrese el ID de la zona en Campuslands que deseas editar => ')
+                        editZonas(idedit)
                     if opcion == 3:
-                        iddelete = input('Ingrese el ID de la zona en Campuslands que deseas eliminar => ')
+                        iddelete = input('\nIngrese el ID de la zona en Campuslands que deseas eliminar => ')
                         deleteZonas(iddelete)
                     # if opcion == 4:
                     #     searchZonas()

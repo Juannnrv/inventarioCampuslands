@@ -58,7 +58,14 @@ def postZonas():
                                         if capacidad.isdigit():
                                             capacidad = int(capacidad)
                                             Zonas['capacidad'] = capacidad
-                                            break
+                                            
+                                            headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
+                                            peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
+                                            res = peticion.json()
+                                            res['Mensaje'] = 'Zona guardada satisfactoriamente'
+                                            print(res['Mensaje'])  # Mostrar el mensaje aquí
+                                            input('Presione Enter para continuar...')
+                                            return [res]
 
                                         else:
                                             raise Exception('---> El dato ingresado de la zona en Campuslands no cumple con el formato establecido')

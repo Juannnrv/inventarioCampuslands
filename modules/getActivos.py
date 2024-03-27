@@ -450,13 +450,13 @@ def editActivos(id):
                                             if re.match(r'[0-9]+$', opcion):
                                                 opcion = int(opcion)
                                                 if opcion >= 0 and opcion <= 3:
-                                                    if opcion == 1:
+                                                    if opcion == 0:
                                                         data[0]['idEstado'] = '0'
-                                                    if opcion == 2:
+                                                    if opcion == 1:
                                                         data[0]['idEstado'] = '1'
-                                                    if opcion == 3:
+                                                    if opcion == 2:
                                                         data[0]['idEstado'] = '2'
-                                                    if opcion == 4:
+                                                    if opcion == 3:
                                                         data[0]['idEstado'] = '3'
                                                     else:
                                                         print('\nPor favor, seleccione una opción válida (0 o 3)')
@@ -492,9 +492,45 @@ def editActivos(id):
     res['Mensaje'] = 'Dato editado satisfactoriamente'
     return [res]
 
+def deleteActivos(id): 
+    # No se elimina solo se cambia el estado del activo a NO ASIGNADO
+    data = ActivosId(id)
+    if len(data):
+        while True:
+            os.system('clear')
+            print("""
+            A continuación eliminaras un activo existente del inventario de Campuslands
+            
+                                    ¿Deseas continuar?
+                
+                                        1. Si
+                                        2. No
+    """)
+            opcion = input('\nSeleccione una de las opciones => ')
+            try:
+                if re.match(r'[0-9]+$', opcion):
+                    opcion = int(opcion)
+                    if opcion >= 1 and opcion <= 2:
+                        if opcion == 1:
+                            data[0]['idEstado'] = "0"
+                        if opcion == 2:
+                            break
+                        else:
+                            print('\nPor favor, seleccione una opción válida (1 o 2)')
+                            break
+                else:
+                    print('\nPor favor, seleccione una opción válida (1 o 2)')
+                    break
 
+            except Exception as error:
+                print('---ERROR---')
+                print(error)
+                break
 
-# def deleteActivos():
+    peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+    res = peticion.json()
+    res['Mensaje'] = 'Dato editado satisfactoriamente'
+    return [res]
 
 # def searchAsignacionActivos():
         #Para obtener un activo específico por su ID: GET /activos/{id}
@@ -528,9 +564,10 @@ def menuActivos():
                         postActivos()
                     elif opcion == 2:
                         idActivo = input('\nIngrese el ID del activo que desea editar => ')
-                        print(tabulate(editActivos(idActivo) , headers='keys', tablefmt='fancy_grid'))
+                        print(tabulate(editActivos(idActivo), headers='keys', tablefmt='fancy_grid'))
                     elif opcion == 3:
-                        deleteActivos()
+                        idActivo = input('\nIngrese el ID del activo que desea eliminar => ')
+                        print(tabulate(deleteActivos(idActivo), headers='keys', tablefmt='fancy_grid'))
                     elif opcion == 4:
                         searchActivos()
                     elif opcion == 5:

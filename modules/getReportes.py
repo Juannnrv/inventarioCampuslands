@@ -76,11 +76,11 @@ def menuReportes():
                 opcion = int(opcion)
                 if opcion >= 0 and opcion <= 6:
                     if opcion == 1:
-                        print(tabulate(Activos(), headers='keys', tablefmt='fancy grid'))
+                        print(tabulate(Activos(), headers='keys', tablefmt='fancy_grid'))
                         input('Presiona la tecla Enter para continuar...')
                     elif opcion == 2:
                         while True:
-                            print(tabulate(CategoriasActivo(), headers='keys', tablefmt='fancy grid'))
+                            print(tabulate(CategoriasActivo(), headers='keys', tablefmt='fancy_grid'))
                             print("""
                             
                             
@@ -95,16 +95,16 @@ def menuReportes():
                                     opcion = int(opcion)
                                     if opcion >= 1 and opcion <= 2:
                                         if opcion == 1:
-                                            print(tabulate(CategoriasActivo(), headers='keys', tablefmt='fancy grid'))
+                                            print(tabulate(CategoriasActivo(), headers='keys', tablefmt='fancy_grid'))
                                         elif opcion == 2:
                                             break  
                             except KeyboardInterrupt:
                                 print()
                     elif opcion == 3:
-                        print(tabulate(ActivosDadosDeBaja(), headers='keys', tablefmt='fancy grid'))
+                        print(tabulate(ActivosDadosDeBaja(), headers='keys', tablefmt='fancy_grid'))
                         input('Presiona la tecla Enter para continuar...')
 
-                       # STANDBY
+                        # STANDBY
 
                     # elif opcion == 4:
                     #     listarActivosAsignacion()

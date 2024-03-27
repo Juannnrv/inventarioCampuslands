@@ -212,6 +212,8 @@ def postActivos():
                                 print('\nRegresando al menú principal...')
                                 break
 
+                        input ('Activo guardado satisfactoriamente')
+
                         break
 
                     elif opcion == 2:
@@ -231,7 +233,6 @@ def postActivos():
     peticion = requests.post('http://154.38.171.54:5502/activos', headers=headers, data=json.dumps(Activos, indent=4))
     res = peticion.json()
     res ['Mensaje'] = 'Activo guardado satisfactoriamente'
-    input ('Activo guardado satisfactoriamente')
     return [res]
 
 def editActivos(id):
@@ -460,13 +461,16 @@ def editActivos(id):
                                                     else:
                                                         print('\nPor favor, seleccione una opción válida (0 o 3)')
                                                         break
+
                                         except KeyboardInterrupt:
                                             print()
                                             
                                         else:
                                             print('\nNo cumple con el formato esperado')
                                             break
-                                
+
+                            input('\nDato editado satisfactoriamente')
+
                             break
 
                         elif opcion == 2:
@@ -485,7 +489,7 @@ def editActivos(id):
             
     peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
     res = peticion.json()
-    input ('\nDato editado satisfactoriamente')
+    res['Mensaje'] = 'Dato editado satisfactoriamente'
     return [res]
 
 

@@ -2,6 +2,7 @@ import re
 import json
 import os 
 import requests
+from tabulate import tabulate
 
 def Zonas():
     peticion = requests.get('http://154.38.171.54:5502/zonas')
@@ -60,13 +61,13 @@ def postZonas():
                                             totalCapacidad = int(totalCapacidad)
                                             Zonas['totalCapacidad'] = totalCapacidad
                                             
-                                            headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-                                            peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
-                                            res = peticion.json()
-                                            res['Mensaje'] = '\nZona guardada satisfactoriamente'
-                                            print(res['Mensaje'])  
-                                            input('\nPresione Enter para continuar...')
-                                            return [res]
+                                            # headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
+                                            # peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
+                                            # res = peticion.json()
+                                            # res['Mensaje'] = '\nZona guardada satisfactoriamente'
+                                            # print(res['Mensaje'])  
+                                            # input('\nPresione Enter para continuar...')
+                                            # return [res]
 
                                         else:
                                             raise Exception('---> El dato ingresado de la zona en Campuslands no cumple con el formato establecido')
@@ -81,7 +82,15 @@ def postZonas():
                         
                         if opcion == 2:
                             break
-                            
+
+                headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
+                peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
+                res = peticion.json()
+                res['Mensaje'] = '\nZona guardada satisfactoriamente'
+                print(res['Mensaje'])  
+                input('\nPresione Enter para continuar...')
+                return [res]
+
             except Exception as error:
                 print('---ERROR---')
                 print(error)
@@ -190,12 +199,6 @@ def editZonas(id):
 
 
 
-
-# def searchAsignacionActivos():
-        #Para obtener un activo específico por su ID: GET /activos/{id}
-
-
-
 def menuZonas():
     while True:
         os.system('clear')
@@ -210,7 +213,7 @@ def menuZonas():
 ''')
         try:
             opcion = (input('\n Seleccione una de las opciones => '))
-            if(re.match(r'[0-9]+$', opcion) is not None):
+            if re.match(r'[0-9]+$', opcion):
                 opcion = int(opcion)
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
@@ -221,10 +224,13 @@ def menuZonas():
                     if opcion == 3:
                         iddelete = input('\nIngrese el ID de la zona en Campuslands que deseas eliminar => ')
                         deleteZonas(iddelete)
-                    # if opcion == 4:
-                    #     searchZonas()
-                    # if opcion == 5:
-                    #     break
+                    if opcion == 4:
+                        idsearch = input('\nIngrese el ID de la zona en Campuslands que deseas buscar => ')
+                        print()
+                        print(tabulate(ZonasID(idsearch), headers='keys', tablefmt='fancy_grid'))
+                        input('\nIngresa la tecla Enter para poder continuar...')
+                    if opcion == 5:
+                        break
 
         except KeyboardInterrupt:
             print('\nRegresando al menú principal...')

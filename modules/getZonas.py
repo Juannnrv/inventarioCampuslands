@@ -63,8 +63,8 @@ def postZonas():
                                             peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
                                             res = peticion.json()
                                             res['Mensaje'] = 'Zona guardada satisfactoriamente'
-                                            print(res['Mensaje'])  # Mostrar el mensaje aquí
-                                            input('Presione Enter para continuar...')
+                                            print(res['\nMensaje'])  
+                                            input('\nPresione Enter para continuar...')
                                             return [res]
 
                                         else:
@@ -93,7 +93,41 @@ def postZonas():
         return [res]
 
 
-# def deleteZonas():
+def deleteZonas(id):
+    while True:
+        while True:
+            os.system('clear')
+            print("""
+            A continuación agregaras una nueva zona en Campuslands
+            
+                            ¿Deseas continuar?
+        
+                                1. Si
+                                2. No
+    """)
+            opcion = input('\nSeleccione una de las opciones => ')
+            try:
+                if re.match(r'[0-9]+$', opcion):
+                    opcion = int(opcion)
+                    if opcion >= 1 and opcion <= 2:
+                        if opcion == 1:
+                            peticion = requests.delete(f'http://154.38.171.54:5502/zonas/{id}')
+                            res = peticion.json()
+                            res['Mensaje'] = 'Zona eliminada satisfactoriamente'
+                            print(res['\nMensaje'])
+                            input('\nPresione la tecla Enter para poder continuar...')
+                            return [res]
+                        elif opcion == 2:
+                            break
+                    else:
+                        raise Exception ('---> El dato ingresado debe ser 1 o 2 ')
+                else:
+                    raise Exception ('---> El dato ingresado debe ser 1 o 2 ')        
+            except Exception as error:
+                print('---ERROR---')
+                print(error)
+                break
+
 
 
 # def editZonas():
@@ -123,14 +157,15 @@ def menuZonas():
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
                         postZonas()
-                    if opcion == 2:
-                        deleteZonas()
+                    # if opcion == 2:
+                        #editZonas()
                     if opcion == 3:
-                        editZonas()
-                    if opcion == 4:
-                        searchZonas()
-                    if opcion == 5:
-                        break
+                        iddelete = input('Ingrese el ID de la zona en Campuslands que deseas eliminar => ')
+                        deleteZonas(iddelete)
+                    # if opcion == 4:
+                    #     searchZonas()
+                    # if opcion == 5:
+                    #     break
 
         except KeyboardInterrupt:
             print('\nRegresando al menú principal...')

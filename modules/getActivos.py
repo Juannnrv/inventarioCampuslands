@@ -532,16 +532,6 @@ def deleteActivos(id):
     res['Mensaje'] = 'Dato editado satisfactoriamente'
     return [res]
 
-# def searchAsignacionActivos():
-        #Para obtener un activo específico por su ID: GET /activos/{id}
-
-
-
-
-
-
-
-
 
 def menuActivos():
     while True:
@@ -563,13 +553,15 @@ def menuActivos():
                     if opcion == 1:
                         postActivos()
                     elif opcion == 2:
-                        idActivo = input('\nIngrese el ID del activo que desea editar => ')
+                        idActivo = input('\nIngrese el ID del activo que deseas editar => ')
                         print(tabulate(editActivos(idActivo), headers='keys', tablefmt='fancy_grid'))
                     elif opcion == 3:
-                        idActivo = input('\nIngrese el ID del activo que desea eliminar => ')
+                        idActivo = input('\nIngrese el ID del activo que deseas eliminar => ')
                         print(tabulate(deleteActivos(idActivo), headers='keys', tablefmt='fancy_grid'))
                     elif opcion == 4:
-                        searchActivos()
+                        idActivo = input('\nIngrese el ID del activo que deseas buscar => ')
+                        print(tabulate(ActivosId(idActivo), headers='keys', tablefmt='fancy grid'))
+                        input('Presiona la tecla Enter para continuar...')
                     elif opcion == 5:
                         break
                     

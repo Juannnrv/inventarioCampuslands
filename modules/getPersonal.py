@@ -4,6 +4,8 @@ import os
 import requests
 from tabulate import tabulate
 
+# http://154.38.171.54:5502/personas
+
 def Personas():
     peticion = requests.get('http://154.38.171.54:5502/personas')
     data = peticion.json()
@@ -145,8 +147,13 @@ def postPersonal():
     input('\nPresione Enter para continuar...')
     return [res]
 
-
-# def deletePersonal():
+def deletePersonal(id):
+    peticion = requests.delete(f'http://154.38.171.54:5502/personas/{id}')
+    data = peticion.json()
+    data ['Mensaje'] = '\nPersona eliminada satisfactoriamente'
+    print(data['Mensaje'])
+    input('\nPresione Enter para continuar...')
+    return [data]
 
 
 # def editPersonal():
@@ -176,8 +183,9 @@ def menuPersonal():
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
                         postPersonal()
-                    # elif opcion == 2:
-                    #     deletePersonal()
+                    elif opcion == 2:
+                        iddelete = input('\nIngrese el ID de la persona que desea eliminar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        deletePersonal(iddelete)
                     # elif opcion == 3:
                     #     editPersonal()
                     # elif opcion == 4:

@@ -20,12 +20,12 @@ def postZonas():
         while True:
             os.system('clear')
             print("""
-            A continuación agregaras una nueva zona en Campuslands
+            A continuación agregaras una nueva zona a SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                            ¿Deseas continuar?
-        
-                                1. Si
-                                2. No
+                                    ¿Deseas continuar?
+                
+                                        1. Si
+                                        2. No
     """)
             opcion = input('\nSeleccione una de las opciones => ')
             try:
@@ -101,12 +101,12 @@ def deleteZonas(id):
         while True:
             os.system('clear')
             print("""
-            A continuación eliminaras una zona existente en Campuslands
+            A continuación eliminaras una zona existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                            ¿Deseas continuar?
-        
-                                1. Si
-                                2. No
+                                        ¿Deseas continuar?
+                    
+                                            1. Si
+                                            2. No
     """)
             opcion = input('\nSeleccione una de las opciones => ')
             try:
@@ -138,12 +138,12 @@ def editZonas(id):
         while True:
             os.system('clear')
             print("""
-            A continuación editaras un dato de una zona existente en Campuslands
+            A continuación editaras un dato de una zona existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                                ¿Deseas continuar?
-            
-                                    1. Si
-                                    2. No
+                                            ¿Deseas continuar?
+                        
+                                                1. Si
+                                                2. No
     """)
             opcion = input('\nSeleccione una de las opciones => ')
             try:

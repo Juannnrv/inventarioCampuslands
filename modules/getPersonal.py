@@ -51,25 +51,25 @@ def postPersonal():
                 if opcion >= 1 and opcion <= 2:
                     if opcion == 1:
                         while True:
-                            os.system('clear')
-                            try:
-                                if 'id' not in personas:
-                                    idpersona = input('Ingrese el ID de la persona => ')
-                                    if idpersona.isdigit():
-                                        idpersona = int(idpersona)
-                                        if idpersona > 0:
-                                            data = PersonasID(idpersona)
-                                            if data:
-                                                raise Exception('El ID de la persona ya existe')
-                                            else:
-                                                personas['id'] = idpersona
-                                                break
-                                        else:
-                                            raise Exception('---> El ID de la persona debe ser un número positivo')
-                                    else:
-                                        raise Exception('---> El ID de la persona no cumple con el estándar establecido')
-                            except Exception as error:
-                                print(error)
+                            # os.system('clear')
+                            # try:
+                            #     if 'id' not in personas:
+                            #         idpersona = input('Ingrese el ID de la persona => ')
+                            #         if idpersona.isdigit():
+                            #             idpersona = int(idpersona)
+                            #             if idpersona > 0:
+                            #                 data = PersonasID(idpersona)
+                            #                 if data:
+                            #                     raise Exception('El ID de la persona ya existe')
+                            #                 else:
+                            #                     personas['id'] = idpersona
+                            #                     break
+                            #             else:
+                            #                 raise Exception('---> El ID de la persona debe ser un número positivo')
+                            #         else:
+                            #             raise Exception('---> El ID de la persona no cumple con el estándar establecido')
+                            # except Exception as error:
+                            #     print(error)
 
                                 if 'nroId (CC, Nit)' not in personas:
                                     nroId = input('\nIngrese la Cc o Nit de la persona => ')

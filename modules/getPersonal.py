@@ -59,7 +59,6 @@ def postPersonal():
                             if 'nroId (CC, Nit)' not in personas:
                                 nroId = input('\nIngrese la Cc o Nit de la persona => ')
                                 if nroId.isdigit():
-                                    nroId = int(nroId)
                                     personas['nroId (CC, Nit)'] = nroId
                                 else:
                                     raise Exception('---> La Cc o Nit de la persona no cumple, debes ingresar números')
@@ -155,8 +154,145 @@ def deletePersonal(id):
     input('\nPresione Enter para continuar...')
     return [data]
 
+def editPersonal(id):
+    
+    data = PersonasID(id)
+    if len(data):
+        while True:
+            os.system('clear')
+            print("""
+            A continuación editaras un activo existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
+            
+                                        ¿Deseas continuar?
+                    
+                                            1. Si
+                                            2. No
+    """)
+            opcion = input('\nSeleccione una de las opciones => ')
+            try:
+                if re.match(r'[0-9]+$', opcion):
+                    opcion = int(opcion)
+                    if opcion >= 1 and opcion <= 2:
+                        if opcion == 1:
+                            
+                            print("""
+                    ¿Qué dato desea actualizar?
 
-# def editPersonal():
+                    1. Número de ID (CC, Nit)
+                    2. Nombre 
+                    3. Email
+                    
+                    ---Telefonos---
+                    
+                    => Movil
+                    4. ID
+                    5. Número 
+                    
+                    => Casa
+                    6. ID
+                    7. Número
+                    
+                    => Personal
+                    8. ID
+                    9. Número
+                    
+                    => Oficina
+                    10. ID
+                    11. Número
+                                """)
+                            opcion = input('\nIngrese una de las opciones => ')
+                            if re.match(r'[0-9]+$', opcion):
+                                opcion = int(opcion)
+                                if opcion >= 1 and opcion <= 11:
+                                    if opcion == 1:
+                                        nroId = input('\nIngrese la nueva Cc o Nit de la persona => ')
+                                        if nroId.isdigit():
+                                            data[0]['nroId (CC, Nit)'] = nroId
+                                        else:
+                                            raise Exception('---> La Cc o Nit de la persona no cumple, debes ingresar números')
+                                    if opcion == 2:
+                                        nombre = input('\nIngrese el nombre de la persona => ')
+                                        if re.match(r'^[a-zA-Z0-9\s-]+$', nombre):
+                                            data[0]['Nombre'] = nombre
+                                        else:
+                                            raise Exception('---> El nombre de la persona no cumple, debes ingresar letras')
+                                    if opcion == 3:
+                                        email = input('\nIngrese el email de la persona => ')
+                                        if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$', email):
+                                            data[0]['Email'] = email
+                                            
+                                    if opcion == 4:
+                                        movil_id = input('\nIngrese el nuevo ID del móvil de la persona => ')
+                                        if movil_id.isdigit():
+                                            data[0]['Telefonos'][0]['movil']['id'] = movil_id
+                                        else:
+                                            raise Exception('---> El ID debe contener solo dígitos.')
+                                    if opcion == 5:
+                                        movil_num = input('Ingrese el número del móvil de la persona => ')
+                                        if movil_num.isdigit():
+                                            data[0]['Telefonos'][0]['movil']['num'] = movil_num
+                                        else:
+                                            raise Exception('---> El número debe contener solo dígitos.')
+                                    if opcion == 6:
+                                        casa_id = input('\nIngrese el ID de la casa de la persona => ')
+                                        if casa_id.isdigit():
+                                            data[0]['Telefonos'][1]['casa']['id'] = casa_id
+                                        else:
+                                            raise Exception('---> El ID debe contener solo dígitos.')
+                                    if opcion == 7:
+                                        casa_num = input('Ingrese el número de casa de la persona => ')
+                                        if casa_num.isdigit():
+                                            data[0]['Telefonos'][1]['casa']['num'] = casa_num
+                                        else:
+                                            raise Exception('---> El número debe contener solo dígitos.')
+                                    if opcion == 8:
+                                        personal_id = input('\nIngrese el ID personal de la persona => ')
+                                        if personal_id.isdigit():
+                                            data[0]['Telefonos'][2]['personal']['id'] = personal_id
+                                        else:
+                                            raise Exception('---> El ID debe contener solo dígitos.')
+                                    if opcion == 9:
+                                        personal_num = input('Ingrese el número personal de la persona => ')
+                                        if personal_num.isdigit():
+                                            data[0]['Telefonos'][2]['personal']['num'] = personal_num
+                                        else:
+                                            raise Exception('---> El número debe contener solo dígitos.')
+                                    if opcion == 10:
+                                        oficina_id = input('\nIngrese el ID de la oficina de la persona => ')
+                                        if oficina_id.isdigit():
+                                            data[0]['Telefonos'][3]['oficina']['id'] = oficina_id
+                                        else:
+                                            raise Exception('---> El ID debe contener solo dígitos.')
+                                    if opcion == 11:
+                                        oficina_num = input('Ingrese el número de la oficina de la persona => ')
+                                        if oficina_num.isdigit():
+                                            data[0]['Telefonos'][3]['oficina']['num'] = oficina_num
+                                        else:
+                                            raise Exception('---> El número debe contener solo dígitos.')
+                                        
+                                    peticion = requests.put(f"http://154.38.171.54:5502/personas/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                                    res = peticion.json()
+                                    res['Mensaje'] = '\nEl dato fue editado satisfactoriamente'
+                                    print()
+                                    print(res['Mensaje'])
+                                    input('\nPresione la tecla Enter para poder continuar...')
+                                    return [res]
+                                
+                                        
+                                else:
+                                    raise Exception ('\nPor favor, seleccione una opción válida de 1 a 11')
+                            
+                        elif opcion == 2:
+                            break
+                            
+                    else:
+                        raise Exception ('\nPor favor, seleccione una opción válida (1 o 2)')
+                            
+            except Exception as error:
+                print('---ERROR---')
+                print(error)
+                break
+        
 
 
 # def searchAsignacionActivos():
@@ -184,10 +320,11 @@ def menuPersonal():
                     if opcion == 1:
                         postPersonal()
                     elif opcion == 2:
+                        idedit = input('\nIngrese el ID asignado a la persona que la cual desea editar un dato en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        editPersonal(idedit)
+                    elif opcion == 3:
                         iddelete = input('\nIngrese el ID de la persona que desea eliminar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
                         deletePersonal(iddelete)
-                    # elif opcion == 3:
-                    #     editPersonal()
                     # elif opcion == 4:
                     #     searchPersonal()
                     # elif opcion == 5:

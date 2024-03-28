@@ -292,11 +292,7 @@ def editPersonal(id):
                 print('---ERROR---')
                 print(error)
                 break
-        
 
-
-# def searchAsignacionActivos():
-        #Para obtener un activo específico por su ID: GET /activos/{id}
 
 
 
@@ -320,15 +316,18 @@ def menuPersonal():
                     if opcion == 1:
                         postPersonal()
                     elif opcion == 2:
-                        idedit = input('\nIngrese el ID asignado a la persona que la cual desea editar un dato en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        idedit = input('\nIngrese el ID asignado a la persona que la cual deseas editar un dato en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
                         editPersonal(idedit)
                     elif opcion == 3:
-                        iddelete = input('\nIngrese el ID de la persona que desea eliminar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        iddelete = input('\nIngrese el ID de la persona que deseas eliminar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
                         deletePersonal(iddelete)
-                    # elif opcion == 4:
-                    #     searchPersonal()
-                    # elif opcion == 5:
-                    #     break
+                    elif opcion == 4:
+                        idsearch = input('\nIngrese el ID de la persona que deseas buscar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        print()
+                        print(tabulate(PersonasID(idsearch), headers='keys', tablefmt='fancy_grid'))
+                        input('\nPresione Enter para continuar...')
+                    elif opcion == 5:
+                        break
 
         except KeyboardInterrupt:
             print('\nRegresando al menú principal...')

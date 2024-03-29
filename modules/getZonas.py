@@ -17,84 +17,83 @@ def ZonasID(id):
 def postZonas():
     Zonas = {}
     while True:
-        while True:
-            os.system('clear')
-            print("""
-            A continuación agregaras una nueva zona a SISTEMA G&C DE INVENTARIO CAMPUSLANDS
+        os.system('clear')
+        print("""
+        A continuación agregaras una nueva zona a SISTEMA G&C DE INVENTARIO CAMPUSLANDS
+        
+                                ¿Deseas continuar?
             
-                                    ¿Deseas continuar?
-                
-                                        1. Si
-                                        2. No
-    """)
-            opcion = input('\nSeleccione una de las opciones => ')
-            try:
-                if re.match(r'[0-9]+$', opcion):
-                    opcion = int(opcion)
-                    if opcion >= 1 and opcion <= 2:
-                        if opcion == 1:
-                            # while True:
-                            #     os.system('clear')
-                            #     try:
-                            #         if not Zonas.get('id'):
-                            #             while True:
-                            #                 iD = input('Ingrese el ID de la zona en Campuslands => ')
-                            #                 if iD.isdigit():
-                            #                     iD = int(iD)
-                            #                     data = ZonasID(iD)
-                            #                     if data:
-                            #                         raise Exception('El ID de la zona en Campuslands ya existe')
-                            #                     else:
-                            #                         Zonas['id'] = iD
-                            #                         break
-                            #                 else:
-                            #                     raise Exception('---> El ID de la zona en Campuslands no cumple con el formato establecido')
-                            #             break
+                                    1. Si
+                                    2. No
+""")
+        opcion = input('\nSeleccione una de las opciones => ')
+        try:
+            if re.match(r'[0-9]+$', opcion):
+                opcion = int(opcion)
+                if opcion >= 1 and opcion <= 2:
+                    if opcion == 1:
+                        # while True:
+                        #     os.system('clear')
+                        #     try:
+                        #         if not Zonas.get('id'):
+                        #             while True:
+                        #                 iD = input('Ingrese el ID de la zona en Campuslands => ')
+                        #                 if iD.isdigit():
+                        #                     iD = int(iD)
+                        #                     data = ZonasID(iD)
+                        #                     if data:
+                        #                         raise Exception('El ID de la zona en Campuslands ya existe')
+                        #                     else:
+                        #                         Zonas['id'] = iD
+                        #                         break
+                        #                 else:
+                        #                     raise Exception('---> El ID de la zona en Campuslands no cumple con el formato establecido')
+                        #             break
 
-                                    if not Zonas.get('nombreZona'):
-                                        nombreZona = input('\nIngrese el nombre de la zona en Campuslands => ')
-                                        if re.match(r'^[A-Z]{1}[a-z]+$', nombreZona):
-                                            Zonas['nombreZona'] = nombreZona
+                                if not Zonas.get('nombreZona'):
+                                    nombreZona = input('\nIngrese el nombre de la zona en Campuslands => ')
+                                    if re.match(r'^[A-Z]{1}[a-z]+$', nombreZona):
+                                        Zonas['nombreZona'] = nombreZona
 
-                                        totalCapacidad = input('Ingrese la capacidad máxima de la zona en Campuslands => ')
-                                        if totalCapacidad.isdigit():
-                                            totalCapacidad = int(totalCapacidad)
-                                            Zonas['totalCapacidad'] = totalCapacidad
-                                            
-                                            # headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-                                            # peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
-                                            # res = peticion.json()
-                                            # res['Mensaje'] = '\nZona guardada satisfactoriamente'
-                                            # print(res['Mensaje'])  
-                                            # input('\nPresione Enter para continuar...')
-                                            # return [res]
-
-                                        else:
-                                            raise Exception('---> El dato ingresado de la zona en Campuslands no cumple con el formato establecido')
+                                    totalCapacidad = input('Ingrese la capacidad máxima de la zona en Campuslands => ')
+                                    if totalCapacidad.isdigit():
+                                        totalCapacidad = int(totalCapacidad)
+                                        Zonas['totalCapacidad'] = totalCapacidad
                                         
+                                        # headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
+                                        # peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
+                                        # res = peticion.json()
+                                        # res['Mensaje'] = '\nZona guardada satisfactoriamente'
+                                        # print(res['Mensaje'])  
+                                        # input('\nPresione Enter para continuar...')
+                                        # return [res]
+
                                     else:
-                                        raise Exception('---> El dato ingresado de la zona en Campuslands ya existe')
+                                        raise Exception('---> El dato ingresado de la zona en Campuslands no cumple con el formato establecido')
+                                    
+                                else:
+                                    raise Exception('---> El dato ingresado de la zona en Campuslands ya existe')
 
-                                # except Exception as error:
-                                #     print('---ERROR---')
-                                #     print(error)
-                                #     break
-                        
-                        if opcion == 2:
-                            break
+                            # except Exception as error:
+                            #     print('\n---ERROR---')
+                            #     print(error)
+                            #     break
+                    
+                    if opcion == 2:
+                        break
 
-                headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-                peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
-                res = peticion.json()
-                res['Mensaje'] = '\nZona guardada satisfactoriamente'
-                print(res['Mensaje'])  
-                input('\nPresione Enter para continuar...')
-                return [res]
+            headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
+            peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
+            res = peticion.json()
+            res['Mensaje'] = '\nZona guardada satisfactoriamente'
+            print(res['Mensaje'])  
+            input('\nPresione Enter para continuar...')
+            return [res]
 
-            except Exception as error:
-                print('---ERROR---')
-                print(error)
-                break
+        except Exception as error:
+            print('\n\n---ERROR---')
+            print(error)
+            break
 
 def deleteZonas(id):
     while True:
@@ -128,7 +127,7 @@ def deleteZonas(id):
                 else:
                     raise Exception ('---> El dato ingresado debe ser 1 o 2 ')        
             except Exception as error:
-                print('---ERROR---')
+                print('\n---ERROR---')
                 print(error)
                 break
 
@@ -192,7 +191,7 @@ def editZonas(id):
                 return [res]   
             
             except Exception as error:
-                print('---ERROR---')
+                print('\n---ERROR---')
                 print(error)
                 break
 

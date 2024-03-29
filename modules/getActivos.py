@@ -218,7 +218,7 @@ def postActivos():
                         break 
 
         except Exception as error:
-            print('---ERROR---')
+            print('\n---ERROR---')
             print(error)
             break
         
@@ -478,7 +478,7 @@ def editActivos(id):
                             break
 
             except Exception as error:
-                print('---ERROR---')
+                print('\n---ERROR---')
                 print(error)
                 break
     
@@ -524,7 +524,7 @@ def deleteActivos(id):
                 break
 
             except Exception as error:
-                print('---ERROR---')
+                print('\n---ERROR---')
                 print(error)
                 break
 

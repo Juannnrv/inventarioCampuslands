@@ -134,7 +134,7 @@ def postPersonal():
                 raise Exception ('---> El dato ingresado debe ser 1 o 2 ')
             
         except Exception as error:
-            print('---ERROR---')
+            print('\n---ERROR---')
             print(error)
             break
 
@@ -289,7 +289,7 @@ def editPersonal(id):
                         raise Exception ('\nPor favor, seleccione una opción válida (1 o 2)')
                             
             except Exception as error:
-                print('---ERROR---')
+                print('\n---ERROR---')
                 print(error)
                 break
 

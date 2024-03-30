@@ -5,6 +5,15 @@ import requests
 from tabulate import tabulate
 import modules.getActivos as gA
 
+def NroAsiganciones(NroAsignacion):
+    data = gA.Activos()  # Llamar a la función para obtener los datos
+    for val in data:
+        for asignacion in val.get('asignaciones', []):
+            if asignacion.get('NroAsignacion') == NroAsignacion:
+                return [val]
+    return []
+
+
 
 def postAsignacionActivos():
     
@@ -105,10 +114,6 @@ def postAsignacionActivos():
             break
 
 
-# def searchAsignacionActivos():
-        #Para obtener un activo específico por su ID: GET /activos/{id}
-
-
 
 def menuAsignacionActivos():
     while True:
@@ -128,8 +133,11 @@ def menuAsignacionActivos():
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
                         postAsignacionActivos()
-                    # elif opcion == 2:
-                    #     searchAsignacionActivos()
+                    elif opcion == 2:
+                        NroAsignacion = input('\nIngrese el número de asignación del activo el cual deseas buscar una asignación en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        print()
+                        print(tabulate(NroAsiganciones(NroAsignacion), headers='keys', tablefmt='fancy_grid'))
+                        input('\nPresione Enter para continuar...')
                     elif opcion == 3:
                         break
         except KeyboardInterrupt:

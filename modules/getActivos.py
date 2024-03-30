@@ -517,13 +517,14 @@ def deleteActivos(id):
     try:
         peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
         res = peticion.json()
-        res['Mensaje'] = '\nDato eliminado satisfactoriamente'
-        print(res['Mensaje'])
+        if 'Mensaje' in res:
+            print(res['Mensaje'])
         input('\nPresione Enter para continuar...')
         return [res]
     except Exception as error:
         print('\n---ERROR---')
         print(error)
+
 
 
 

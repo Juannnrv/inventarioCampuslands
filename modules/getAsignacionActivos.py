@@ -12,7 +12,7 @@ def postAsignacionActivos():
         
     
     while True:
-        # os.system('clear')
+        os.system('clear')
         print("""
         A continuación agregaras una nueva asignación a un activo existente en SISTEMA G&C DE INVENTARIO CAMPUSLANDS
         
@@ -28,9 +28,16 @@ def postAsignacionActivos():
                 if opcion >= 1 and opcion <= 2:
                     if opcion == 1:
                         idPost = input('\nIngrese el ID del activo en el cual deseas crear una asignación en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
-                        # Validar ID del activo
+
+                        # Validar la existencia del ID del activo
                         if not any(activo["id"] == idPost for activo in data):
                             raise Exception('\n---> El ID del activo no existe')
+
+                        # Validar el estado del activo
+                        for activo in data:
+                            if activo["id"] == idPost:
+                                if activo["idEstado"] == "0" and (activo["idEstado"] != "3" or activo["idTipo"] == "1"):
+                                    raise Exception ('---> No se puede agregar una asignación a un activo que se encuentra dado de baja o en reparación y/o garantía')
 
                         NroAsignacion = input('\nIngrese el número de asignación del activo => ')
                         # Validar número de asignación
@@ -71,16 +78,19 @@ def postAsignacionActivos():
                                 # Si no se encontró una asignación con el mismo número, agregamos la nueva asignación al mismo diccionario
                                 activo["asignaciones"].append({"NroAsignacion": NroAsignacion, "FechaAsignacion": FechaAsignacion, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
                                 break
-
-                        print('\nAsignación creada satisfactoriamente.')
-                            
-                        headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-                        peticion = requests.post(f'http://154.38.171.54:5502/activos?id={id}', headers=headers, data=json.dumps(activo, indent=4))
-                        res = peticion.json()
-                        res['Mensaje'] = '\nAsignación creada satisfactoriamente'
-                        print(res['Mensaje'])  
-                        input('\nPresione Enter para continuar...')
-                        return [res]
+                        try:    
+                            headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
+                            peticion = requests.post(f'http://154.38.171.54:5502/activos?id={id}', headers=headers, data=json.dumps(activo, indent=4))
+                            res = peticion.json()
+                            res['Mensaje'] = '\nAsignación creada satisfactoriamente'
+                            print(res['Mensaje'])  
+                            input('\nPresione Enter para continuar...')
+                            return [res]
+                        except Exception as error:
+                            print('\n---ERROR---')
+                            print(error)
+                            input('\nPresione Enter para continuar...')
+                            break
                         
                     elif opcion == 2:
                         break
@@ -91,6 +101,7 @@ def postAsignacionActivos():
         except Exception as error:
             print('\n---ERROR---')
             print(error)
+            input('\nPresione Enter para continuar...')
             break
 
 
@@ -101,7 +112,7 @@ def postAsignacionActivos():
 
 def menuAsignacionActivos():
     while True:
-        # os.system('clear')
+        os.system('clear')
         print('''
                             ---MENÚ ASIGNACIÓN ACTIVOS---
 

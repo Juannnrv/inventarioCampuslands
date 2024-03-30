@@ -5,13 +5,31 @@ import requests
 from tabulate import tabulate
 import modules.getActivos as gA
 
+def DataAsignaciones():
+    result = []
+    for val in gA.Activos():
+        asignaciones = val.get("asignaciones", [])
+        for asignacion in asignaciones:
+            diccionario = {}
+            diccionario["NroAsignacion"] = asignacion.get("NroAsignacion")
+            diccionario["FechaAsignacion"] = asignacion.get("FechaAsignacion")
+            diccionario["TipoAsignacion"] = asignacion.get("TipoAsignacion")
+            diccionario["AsignadoA"] = asignacion.get("AsignadoA")
+            diccionario["ID Activo"] = val.get("id")
+            diccionario["Nombre del activo"] = val.get("Nombre")
+            result.append(diccionario)
+    return result
+    
 def NroAsiganciones(NroAsignacion):
-    data = gA.Activos()  # Llamar a la función para obtener los datos
-    for val in data:
-        for asignacion in val.get('asignaciones', []):
-            if asignacion.get('NroAsignacion') == NroAsignacion:
-                return [val]
-    return []
+    asignaciones_encontradas = []
+    for val in DataAsignaciones():
+        if val.get("NroAsignacion") == NroAsignacion:
+            asignaciones_encontradas.append(val)
+            return asignaciones_encontradas
+    print('\nEl número de asignación no existe')
+    return asignaciones_encontradas
+
+
 
 
 def postAsignacionActivos():

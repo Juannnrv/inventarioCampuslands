@@ -211,270 +211,237 @@ def postActivos():
             input('\nPresiona Enter para continuar...')
             print(error)
 
+
 def editActivos(id):
     data = ActivosId(id)
-    if len(data):
-        while True:
-            os.system('clear')
-            print("""
-            A continuación editaras un activo existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
+    if not data:
+        print("El activo no existe.")
+        return
+
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')  # Limpiar la consola
+        print("""
+        A continuación editarás un activo existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                                        ¿Deseas continuar?
-                    
-                                            1. Si
-                                            2. No
-    """)
-            opcion = input('\nSeleccione una de las opciones => ')
-            try:
-                if re.match(r'[0-9]+$', opcion):
+                                ¿Deseas continuar?
+                
+                                    1. Si
+                                    2. No
+        """)
+        opcion = input('\nSeleccione una de las opciones => ')
+
+        if opcion == '1':
+            while True:
+                os.system('cls' if os.name == 'nt' else 'clear')  # Limpiar la consola
+                print("""
+                ¿Qué dato desea actualizar?
+
+                1. Número de Item
+                2. Código de transacción
+                3. Número de serial
+                4. Código Campus
+                5. Número de formulario
+                6. Nombre
+                7. Proveedor
+                8. Empresa responsable
+                9. Id de marca
+                10. Id de categoría
+                11. Id de tipo
+                12. Valor unitario
+                13. Id estado
+                """)
+                opcion = input('\nIngrese una de las opciones => ')
+
+                if opcion.isdigit():
                     opcion = int(opcion)
-                    if opcion >= 1 and opcion <= 2:
-                        if opcion == 1:
-                            print("""
-                    ¿Qué dato desea actualizar?
-
-                    1. Número de Item
-                    2. Código de transacción
-                    3. Número de serial
-                    4. Código Campus
-                    5. Número de formulario
-                    6. Nombre
-                    7. Proveedor
-                    8. Empresa responsable
-                    9. Id de marca
-                    10. Id de categoría
-                    11. Id de tipo
-                    12. Valor unitario
-                    13. Id estado
-                                """)
-                            opcion = input('\nIngrese una de las opciones => ')
-                            if re.match(r'[0-9]+$', opcion):
-                                opcion = int(opcion)
-                                if opcion >= 1 and opcion <= 14:
-                                    if opcion == 1:
-                                        NroItem = input('\nIngrese el nuevo número de item del activo => ')
-                                        if NroItem.isdigit():
-                                            NroItem = int(NroItem)
-                                            data[0]['NroItem'] = NroItem
-                                    if opcion == 2:
-                                        CodTransaccion = input('\nIngrese el código de transacción del activo => ')
-                                        if CodTransaccion.isdigit():
-                                            CodTransaccion = int(CodTransaccion)
-                                            data[0]['CodTransaccion'] = CodTransaccion
-                                        else:
-                                            raise Exception('---> El código de transacción del activo solo debe contener digitos')
-                                    if opcion == 3:
-                                        # Serial
-                                        print("""
-                                        ¿Desea asignarle un nuevo número de serial a un activo ya existente?
-                                
-                                                                1. Si
-                                                                2. No
-                                    """)
-                                        opcion = input('\nSeleccione una de las opciones => ')
-                                        try:
-                                            if re.match(r'[A-Z0-9]+$', opcion):
-                                                opcion = int(opcion)
-                                                if opcion >= 1 and opcion <= 2:
-                                                    if opcion == 1:
-                                                        NroSerial = input('\nIngrese el nuevo número del serial asignado al activo => ')
-                                                        if re.match(r'^[a-zA-Z0-9\s-]+$', NroSerial):
-                                                            data[0]['NroSerial'] = NroSerial
-                                                    elif opcion == 2:
-                                                        data[0]['NroSerial'] = 'Sin serial ' 
-                                                else:
-                                                    raise Exception ('\nPor favor, seleccione una opción válida (1 o 2)')
-                                                    break
-                                        except KeyboardInterrupt:
-                                            print()
-                                    if opcion == 4:
-                                        CodCampus = input('\nIngrese el nuevo código de Campus que vas a asignar al activo => ')
-                                        if re.match(r'^[A-Z]{3}[0-9]{3}$', CodCampus):
-                                            data[0]['CodCampus'] = CodCampus
-                                        else:
-                                            raise Exception ('---> El código de Campus debe tener 3 letras y 3 números')
-                                    if opcion == 5:
-                                        NroFormulario = input('\nIngrese el nuevo número de formulario del activo => ')
-                                        if re.match(r'[0-9]+$', NroFormulario):
-                                            NroFormulario = int(NroFormulario)
-                                            data[0]['NroFormulario'] = NroFormulario
-                                        else:
-                                            raise Exception('---> El número de formulario del activo solo debe contener digitos')
-                                    if opcion == 6:
-                                        Nombre = input('\nIngrese el nuevo nombre del activo => ')
-                                        if re.match(r'^[^\n]+$', Nombre):
-                                            data[0]['Nombre'] = Nombre
-                                    if opcion == 7:
-                                        Proveedor = input('\nIngrese el nuevo proveedor del activo => ')
-                                        if re.match(r'^[a-zA-Z0-9\s-]+$', Proveedor):
-                                            data[0]['Proveedor'] = Proveedor
-                                    if opcion == 8:
-                                        EmpresaResponsable = input('\nIngrese la nueva empresa responsable del activo => ')
-                                        if re.match(r'^[a-zA-Z0-9\s-]+$', EmpresaResponsable):
-                                            data[0]['EmpresaResponsable'] = EmpresaResponsable
-                                    if opcion == 9:
-                                        print("""
-                                                Marcas
-                    
-                                            1. LG
-                                            2. Compumax
-                                            3. Logitech
-                                            4. Benq
-                                            5. Asus
-                                            6. Lenovo
-                                            7. Hp 
-                                            """)
-                                        opcion = input('\nSeleccione la opción de la nueva marca del activo => ')
-                                        try:
-                                            if re.match(r'[0-9]+$', opcion):
-                                                opcion = int(opcion)
-                                                if opcion >= 1 and opcion <= 7:
-                                                    if opcion == 1:
-                                                        data[0]['idMarca'] = '1'
-                                                    elif opcion == 2:
-                                                        data[0]['idMarca'] = '2'
-                                                    elif opcion == 3:
-                                                        data[0]['idMarca'] = '3'
-                                                    elif opcion == 4:
-                                                        data[0]['idMarca'] = '4'
-                                                    elif opcion == 5:
-                                                        data[0]['idMarca'] = '5'
-                                                    elif opcion == 6:
-                                                        data[0]['idMarca'] = '6'
-                                                    elif opcion == 7:
-                                                        data[0]['idMarca'] = '7'
-                                                    
-                                            else:
-                                                raise Exception ('\nPor favor, seleccione una opción válida (1 o 7)')
-                                                break
-                                        except KeyboardInterrupt:
-                                            print()
-
-                                    if opcion == 10:
-                                        print("""
-                                            Categorías
-                    
-                                        1. Equipo de computo
-                                        2. Electrodomestico
-                                        3. Juego
-                                            """)
-                                        opcion = input('\nSeleccione la opción de la nueva categoría del activo => ')
-                                        try:
-                                            if re.match(r'[0-9]+$', opcion):
-                                                opcion = int(opcion)
-                                                if opcion >= 1 and opcion <= 3:
-                                                    if opcion == 1:
-                                                        data[0]['idCategoria'] = '1'
-                                                    elif opcion == 2:
-                                                        data[0]['idCategoria'] = '2'
-                                                    elif opcion == 3:
-                                                        data[0]['idCategoria'] = '3'
-                                            else:
-                                                raise Exception ('---> El dato ingresado debe ser un número del 1 al 3')
-                                                break
-                                        except KeyboardInterrupt:
-                                            print()
-
-                                    if opcion == 11:
-                                        print("""
-                                            Tipos de Activos
-                    
-                                        1. Monitor
-                                        2. Cpu
-                                        3. Teclado
-                                        4. Mouse
-                                        5. Aire acondicionado
-                                        6. Portatil
-                                        7. Televisor
-                                        8. Arcade 
-                                            """)
-                                        opcion = input('\nSeleccione el tipo de activo => ')
-                                        try:
-                                            if re.match(r'[0-9]+$', opcion):
-                                                opcion = int(opcion)
-                                                if opcion >= 1 and opcion <= 8:
-                                                    if opcion == 1:
-                                                        data[0]['idTipoActivo'] = '1'
-                                                    if opcion == 2:
-                                                        data[0]['idTipoActivo'] = '2'
-                                                    if opcion == 3:
-                                                        data[0]['idTipoActivo'] = '3'
-                                                    if opcion == 4:
-                                                        data[0]['idTipoActivo'] = '4'
-                                                    if opcion == 5:
-                                                        data[0]['idTipoActivo'] = '5'
-                                                    if opcion == 6:
-                                                        data[0]['idTipoActivo'] = '6'
-                                                    if opcion == 7:
-                                                        data[0]['idTipoActivo'] = '7'
-                                                    if opcion == 8:
-                                                        data[0]['idTipoActivo'] = '8'
-                                            else:
-                                                raise Exception ('---> El dato ingresado debe ser un número del 1 al 8')
-                                                break
-                                        except KeyboardInterrupt:
-                                            print()
-                                    if opcion == 12:
-                                        ValorUnitario = input('\nIngrese el nuevo valor unitario del activo => ')
-                                        if re.match(r'^[0-9]+$', ValorUnitario):
-                                            data[0]['ValorUnitario'] = ValorUnitario
-                                        else:
-                                            raise Exception('---> El valor unitario del activo solo debe contener digitos')
-                                    if opcion == 13:
-                                        print("""
-                                            Estados de Activos
-                    
-                                        0. No asignado
-                                        1. Asignado
-                                        2. Dado de baja por daño
-                                        3. En reparación y/o garantía 
-                                            """)
-                                        opcion = input('\nSeleccione el tipo de activo => ')
-                                        try:
-                                            if re.match(r'[0-9]+$', opcion):
-                                                opcion = int(opcion)
-                                                if opcion >= 0 and opcion <= 3:
-                                                    if opcion == 0:
-                                                        data[0]['idEstado'] = '0'
-                                                    if opcion == 1:
-                                                        data[0]['idEstado'] = '1'
-                                                    if opcion == 2:
-                                                        data[0]['idEstado'] = '2'
-                                                    if opcion == 3:
-                                                        data[0]['idEstado'] = '3'
-                                            else:
-                                                raise Exception ('---> El dato ingresado debe ser un número del 0 al 3')
-                                                break
-                                        except KeyboardInterrupt:
-                                            print()
+                    if opcion >= 1 and opcion <= 13:
+                        while True:
+                            os.system('cls' if os.name == 'nt' else 'clear')  # Limpiar la consola
+                            if opcion == 1:
+                                NroItem = input('\nIngrese el nuevo número de item del activo => ')
+                                if NroItem.isdigit():
+                                    data[0]['NroItem'] = int(NroItem)
+                                    break
                                 else:
-                                    raise Exception ('---> El dato ingresado debe ser un número del 1 al 14')
-                            break
+                                    print('---> El número de item debe contener solo dígitos.')
+                            elif opcion == 2:
+                                # Código de transacción
+                                CodTransaccion = input('\nIngrese el código de transacción del activo => ')
+                                if CodTransaccion.isdigit():
+                                    data[0]['CodTransaccion'] = int(CodTransaccion)
+                                    break
+                                else:
+                                    print('---> El código de transacción debe contener solo dígitos.')
+                            elif opcion == 3:
+                                print("""
+                                ¿Desea asignarle un nuevo número de serial a un activo ya existente?
+        
+                                                        1. Si
+                                                        2. No
+                                """)
+                                opcion_serial = input('\nSeleccione una de las opciones => ')
+                                if opcion_serial == '1':
+                                    NroSerial = input('\nIngrese el nuevo número del serial asignado al activo => ')
+                                    if re.match(r'^[a-zA-Z0-9\s-]+$', NroSerial):
+                                        data[0]['NroSerial'] = NroSerial
+                                        break
+                                    else:
+                                        print('---> El formato del número de serial no es válido.')
+                                elif opcion_serial == '2':
+                                    data[0]['NroSerial'] = 'Sin serial'
+                                    break
+                                else:
+                                    print('---> Opción no válida.')
+                            elif opcion == 4:
+                                CodCampus = input('\nIngrese el nuevo código de Campus que vas a asignar al activo => ')
+                                if re.match(r'^[A-Z]{3}[0-9]{3}$', CodCampus):
+                                    data[0]['CodCampus'] = CodCampus
+                                    break
+                                else:
+                                    print('---> El código de Campus debe tener 3 letras y 3 números')
+                            elif opcion == 5:
+                                NroFormulario = input('\nIngrese el nuevo número de formulario del activo => ')
+                                if NroFormulario.isdigit():
+                                    data[0]['NroFormulario'] = int(NroFormulario)
+                                    break
+                                else:
+                                    print('---> El número de formulario del activo solo debe contener dígitos')
+                            elif opcion == 6:
+                                Nombre = input('\nIngrese el nuevo nombre del activo => ')
+                                if re.match(r'^[^\n]+$', Nombre):
+                                    data[0]['Nombre'] = Nombre
+                                    break
+                                else:
+                                    print('---> El formato del nombre no es válido.')
+                            elif opcion == 7:
+                                Proveedor = input('\nIngrese el nuevo proveedor del activo => ')
+                                if re.match(r'^[a-zA-Z0-9\s-]+$', Proveedor):
+                                    data[0]['Proveedor'] = Proveedor
+                                    break
+                                else:
+                                    print('---> El formato del proveedor no es válido.')
+                            elif opcion == 8:
+                                EmpresaResponsable = input('\nIngrese la nueva empresa responsable del activo => ')
+                                if re.match(r'^[a-zA-Z0-9\s-]+$', EmpresaResponsable):
+                                    data[0]['EmpresaResponsable'] = EmpresaResponsable
+                                    break
+                                else:
+                                    print('---> El formato de la empresa responsable no es válido.')
+                            elif opcion == 9:
+                                print("""
+                                        Marcas
+        
+                                    1. LG
+                                    2. Compumax
+                                    3. Logitech
+                                    4. Benq
+                                    5. Asus
+                                    6. Lenovo
+                                    7. Hp 
+                                    """)
+                                opcion_marca = input('\nSeleccione la opción de la nueva marca del activo => ')
+                                if opcion_marca.isdigit():
+                                    opcion_marca = int(opcion_marca)
+                                    if opcion_marca >= 1 and opcion_marca <= 7:
+                                        data[0]['idMarca'] = str(opcion_marca)
+                                        break
+                                    else:
+                                        print('---> Opción no válida.')
+                                else:
+                                    print('---> Por favor, ingrese un número.')
+                            elif opcion == 10:
+                                print("""
+                                    Categorías
+        
+                                1. Equipo de computo
+                                2. Electrodomestico
+                                3. Juego
+                                    """)
+                                opcion_categoria = input('\nSeleccione la opción de la nueva categoría del activo => ')
+                                if opcion_categoria.isdigit():
+                                    opcion_categoria = int(opcion_categoria)
+                                    if opcion_categoria >= 1 and opcion_categoria <= 3:
+                                        data[0]['idCategoria'] = str(opcion_categoria)
+                                        break
+                                    else:
+                                        print('---> Opción no válida.')
+                                else:
+                                    print('---> Por favor, ingrese un número.')
+                            elif opcion == 11:
+                                print("""
+                                    Tipos de Activos
+        
+                                1. Monitor
+                                2. Cpu
+                                3. Teclado
+                                4. Mouse
+                                5. Aire acondicionado
+                                6. Portatil
+                                7. Televisor
+                                8. Arcade 
+                                    """)
+                                opcion_tipo = input('\nSeleccione el tipo de activo => ')
+                                if opcion_tipo.isdigit():
+                                    opcion_tipo = int(opcion_tipo)
+                                    if opcion_tipo >= 1 and opcion_tipo <= 8:
+                                        data[0]['idTipoActivo'] = str(opcion_tipo)
+                                        break
+                                    else:
+                                        print('---> Opción no válida.')
+                                else:
+                                    print('---> Por favor, ingrese un número.')
+                            elif opcion == 12:
+                                ValorUnitario = input('\nIngrese el nuevo valor unitario del activo => ')
+                                if ValorUnitario.isdigit():
+                                    data[0]['ValorUnitario'] = ValorUnitario
+                                    break
+                                else:
+                                    print('---> El valor unitario del activo solo debe contener dígitos')
+                            elif opcion == 13:
+                                print("""
+                                    Estados de Activos
+        
+                                0. No asignado
+                                1. Asignado
+                                2. Dado de baja por daño
+                                3. En reparación y/o garantía 
+                                    """)
+                                opcion_estado = input('\nSeleccione el tipo de activo => ')
+                                if opcion_estado.isdigit():
+                                    opcion_estado = int(opcion_estado)
+                                    if opcion_estado >= 0 and opcion_estado <= 3:
+                                        data[0]['idEstado'] = str(opcion_estado)
+                                        break
+                                    else:
+                                        print('---> Opción no válida.')
+                                else:
+                                    print('---> Por favor, ingrese un número.')
 
-                        elif opcion == 2:
-                            raise Exception ('---> Regresando al menú de Activos...')
+                        try:
+                            peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                            res = peticion.json()
+                            if 'Mensaje' in res:
+                                print(res['Mensaje'])
+                            print('\nDato editado satisfactoriamente...')
+                            return [res]
+                        except Exception as error:
+                            print('\n---ERROR---')
+                            print(error)
                     else:
-                        raise Exception ('---> El dato ingresado debe ser 1 o 2')
+                        print('---> El dato ingresado debe ser un número del 1 al 13')
+                else:
+                    print('---> Por favor, ingrese un número válido.')
+            break
+        elif opcion == '2':
+            print('\nRegresando al menú de Activos...')
+            break
+        else:
+            print('---> El dato ingresado debe ser 1 o 2')
 
-            except Exception as error:
-                print('\n---ERROR---')
-                print(error)
-                input('\nPresione la tecla Enter para poder continuar...')
-                break
     
     # Activos['historialActivos'] = []
     # Activos['asignaciones'] = [] 
-    
-    try:
-        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
-        res = peticion.json()
-        res['Mensaje'] = '\nDato editado satisfactoriamente'
-        print(res['Mensaje'])
-        return [res]
-    except Exception as error:
-        print('\n---ERROR---')
-        print(error)
-        input('\nPresione la tecla Enter para poder continuar...')
+
 
 def deleteActivos(id): 
     # No se elimina solo se cambia el estado del activo a NO ASIGNADO

@@ -43,10 +43,10 @@ def postAsignacionActivos():
                             raise Exception('\n---> El ID del activo no existe')
 
                         # Validar el estado del activo
-                        for activo in data:
-                            if activo["id"] == idPost:
-                                if activo["idEstado"] == "0" and (activo["idEstado"] != "3" or activo["idTipo"] == "1"):
-                                    raise Exception ('---> No se puede agregar una asignación a un activo que se encuentra dado de baja o en reparación y/o garantía')
+                        if activo["idEstado"] == "0":
+                            if activo["idEstado"] == "3" or activo["idTipo"] == "2" or activo["idEstado"] == "2":
+                                raise Exception('---> No se puede asignar un activo en reparación, dado de baja o ya asignado')
+
 
                         NroAsignacion = input('\nIngrese el número de asignación del activo => ')
                         # Validar número de asignación

@@ -14,11 +14,8 @@ def NroAsiganciones(NroAsignacion):
     return []
 
 
-
 def postAsignacionActivos():
-    
     data = gA.Activos()
-        
     
     while True:
         os.system('clear')
@@ -39,14 +36,18 @@ def postAsignacionActivos():
                         idPost = input('\nIngrese el ID del activo en el cual deseas crear una asignación en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
 
                         # Validar la existencia del ID del activo
-                        if not any(activo["id"] == idPost for activo in data):
+                        activo_encontrado = None
+                        for activo in data:
+                            if activo["id"] == idPost:
+                                activo_encontrado = activo
+                                break
+
+                        if not activo_encontrado:
                             raise Exception('\n---> El ID del activo no existe')
 
                         # Validar el estado del activo
-                        if activo["idEstado"] == "0":
-                            if activo["idEstado"] == "3" or activo["idTipo"] == "2" or activo["idEstado"] == "2":
-                                raise Exception('---> No se puede asignar un activo en reparación, dado de baja o ya asignado')
-
+                        if activo_encontrado["idEstado"] != "0" and activo_encontrado['idTipo'] == "2":
+                            raise Exception('---> No se puede asignar un activo en reparación, dado de baja o ya asignado')
 
                         NroAsignacion = input('\nIngrese el número de asignación del activo => ')
                         # Validar número de asignación
@@ -78,28 +79,24 @@ def postAsignacionActivos():
                             raise Exception('\n---> ID de asignación no válido')
 
                         # Agregar la nueva asignación al activo correspondiente
-                        for activo in data:
-                            if activo["id"] == idPost:
-                                # Comprobamos si ya existe una asignación con el mismo número
-                                for asignacion in activo["asignaciones"]:
-                                    if "NroAsignacion" in asignacion and asignacion["NroAsignacion"] == NroAsignacion:
-                                        raise Exception('\n---> El número de asignación ya existe para este activo')
-                                # Si no se encontró una asignación con el mismo número, agregamos la nueva asignación al mismo diccionario
-                                activo["asignaciones"].append({"NroAsignacion": NroAsignacion, "FechaAsignacion": FechaAsignacion, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
-                                break
+                        # Actualizar las asignaciones del activo existente
+                        for asignacion in activo_encontrado["asignaciones"]:
+                            if asignacion["NroAsignacion"] == NroAsignacion:
+                                raise Exception('\n---> El número de asignación ya existe para este activo')
+
+                        activo_encontrado["asignaciones"].append({"NroAsignacion": NroAsignacion, "FechaAsignacion": FechaAsignacion, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
+                        
                         try:    
                             headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-                            peticion = requests.post(f'http://154.38.171.54:5502/activos?id={id}', headers=headers, data=json.dumps(activo, indent=4))
+                            peticion = requests.put(f'http://154.38.171.54:5502/activos/{idPost}', headers=headers, data=json.dumps(activo_encontrado, indent=4))
                             res = peticion.json()
                             res['Mensaje'] = '\nAsignación creada satisfactoriamente'
                             print(res['Mensaje'])  
                             input('\nPresione Enter para continuar...')
-                            return [res]
                         except Exception as error:
                             print('\n---ERROR---')
                             print(error)
                             input('\nPresione Enter para continuar...')
-                            break
                         
                     elif opcion == 2:
                         break
@@ -111,7 +108,9 @@ def postAsignacionActivos():
             print('\n---ERROR---')
             print(error)
             input('\nPresione Enter para continuar...')
-            break
+
+
+
 
 
 
@@ -124,13 +123,12 @@ def menuAsignacionActivos():
                             1. Crear asignación
                             2. Buscar asignación
                             3. Regresar al menú principal
-                        
 ''')
         try:
             opcion = input('\nSeleccione una de las opciones => ')
             if re.match(r'^[0-9]+$', opcion):
                 opcion = int(opcion)
-                if opcion >= 0 and opcion <= 5:
+                if opcion >= 1 and opcion <= 3:
                     if opcion == 1:
                         postAsignacionActivos()
                     elif opcion == 2:

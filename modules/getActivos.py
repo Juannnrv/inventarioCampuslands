@@ -16,9 +16,13 @@ def ActivosNroItem(NroItem):
             return [val]
         
 def ActivosId(id):
+    idEncontrados = []
     for val in Activos():
         if val.get('id') == id:
-            return [val]
+            idEncontrados.append(val)
+            return idEncontrados
+    print('\nEl activo no existe')
+    return idEncontrados
 
 def postActivos():
     Activos = {}
@@ -448,7 +452,7 @@ def editActivos(id):
                             break
 
                         elif opcion == 2:
-                            break
+                            raise Exception ('---> Regresando al menú de Activos...')
                     else:
                         raise Exception ('---> El dato ingresado debe ser 1 o 2')
 
@@ -460,12 +464,17 @@ def editActivos(id):
     
     # Activos['historialActivos'] = []
     # Activos['asignaciones'] = [] 
-            
-    peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
-    res = peticion.json()
-    res['Mensaje'] = '\nDato editado satisfactoriamente'
-    print(res['Mensaje'])
-    return [res]
+    
+    try:
+        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+        res = peticion.json()
+        res['Mensaje'] = '\nDato editado satisfactoriamente'
+        print(res['Mensaje'])
+        return [res]
+    except Exception as error:
+        print('\n---ERROR---')
+        print(error)
+        input('\nPresione la tecla Enter para poder continuar...')
 
 def deleteActivos(id): 
     # No se elimina solo se cambia el estado del activo a NO ASIGNADO
@@ -488,14 +497,16 @@ def deleteActivos(id):
                     opcion = int(opcion)
                     if opcion >= 1 and opcion <= 2:
                         if opcion == 1:
-                            data[0]['idEstado'] = "0"
+                            if len(data[0]['asignaciones']) == 0:
+                                data[0]['idEstado'] = "0"
+                            else:
+                                raise Exception('El activo está asignado a una persona o zona y no se puede eliminar.')
                         if opcion == 2:
                             break
                     else:
-                        raise Exception ('\nPor favor, seleccione una opción válida (1 o 2)')
-                        break
+                        raise Exception('\nPor favor, seleccione una opción válida (1 o 2)')
                 else:
-                    raise Exception('\nPor favor, seleccione una opción válida 1 o 2')
+                    raise Exception('\nPor favor, seleccione una opción válida (1 o 2)')
                 break
 
             except Exception as error:
@@ -503,12 +514,17 @@ def deleteActivos(id):
                 print(error)
                 break
 
-    peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
-    res = peticion.json()
-    res['Mensaje'] = '\nDato eliminado satisfactoriamente'
-    print(res['Mensaje'])
-    input('\nPresione Enter para continuar...')
-    return [res]
+    try:
+        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+        res = peticion.json()
+        res['Mensaje'] = '\nDato eliminado satisfactoriamente'
+        print(res['Mensaje'])
+        input('\nPresione Enter para continuar...')
+        return [res]
+    except Exception as error:
+        print('\n---ERROR---')
+        print(error)
+
 
 
 def menuActivos():

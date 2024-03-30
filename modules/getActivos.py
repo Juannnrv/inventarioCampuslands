@@ -194,13 +194,14 @@ def postActivos():
     Activos['asignaciones'] = []
     
     try:
+        
         headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
         peticion = requests.post('http://154.38.171.54:5502/activos', headers=headers, data=json.dumps(Activos, indent=4))
         res = peticion.json()
         res ['Mensaje'] = '\nActivo guardado satisfactoriamente'
         print(res['Mensaje'])
-        input('\nPresione Enter para continuar...')
         return [res]
+    
     except Exception as error:
             print('\n---ERROR---')
             input('\nPresiona Enter para continuar...')
@@ -256,6 +257,8 @@ def editActivos(id):
                                         if CodTransaccion.isdigit():
                                             CodTransaccion = int(CodTransaccion)
                                             data[0]['CodTransaccion'] = CodTransaccion
+                                        else:
+                                            raise Exception('---> El código de transacción del activo solo debe contener digitos')
                                     if opcion == 3:
                                         # Serial
                                         print("""
@@ -276,7 +279,7 @@ def editActivos(id):
                                                     elif opcion == 2:
                                                         data[0]['NroSerial'] = 'Sin serial ' 
                                                 else:
-                                                    print('\nPor favor, seleccione una opción válida (1 o 2)')
+                                                    raise Exception ('\nPor favor, seleccione una opción válida (1 o 2)')
                                                     break
                                         except KeyboardInterrupt:
                                             print()
@@ -284,14 +287,18 @@ def editActivos(id):
                                         CodCampus = input('\nIngrese el nuevo código de Campus que vas a asignar al activo => ')
                                         if re.match(r'^[A-Z]{3}[0-9]{3}$', CodCampus):
                                             data[0]['CodCampus'] = CodCampus
+                                        else:
+                                            raise Exception ('---> El código de Campus debe tener 3 letras y 3 números')
                                     if opcion == 5:
                                         NroFormulario = input('\nIngrese el nuevo número de formulario del activo => ')
                                         if re.match(r'[0-9]+$', NroFormulario):
                                             NroFormulario = int(NroFormulario)
                                             data[0]['NroFormulario'] = NroFormulario
+                                        else:
+                                            raise Exception('---> El número de formulario del activo solo debe contener digitos')
                                     if opcion == 6:
                                         Nombre = input('\nIngrese el nuevo nombre del activo => ')
-                                        if re.match(r'^[a-zA-Z0-9\s-]+$', Nombre):
+                                        if re.match(r'^[^\n]+$', Nombre):
                                             data[0]['Nombre'] = Nombre
                                     if opcion == 7:
                                         Proveedor = input('\nIngrese el nuevo proveedor del activo => ')
@@ -333,9 +340,9 @@ def editActivos(id):
                                                     elif opcion == 7:
                                                         data[0]['idMarca'] = '7'
                                                     
-                                                    else:
-                                                        print('\nPor favor, seleccione una opción válida (1 o 7)')
-                                                        break
+                                            else:
+                                                raise Exception ('\nPor favor, seleccione una opción válida (1 o 7)')
+                                                break
                                         except KeyboardInterrupt:
                                             print()
 
@@ -358,9 +365,9 @@ def editActivos(id):
                                                         data[0]['idCategoria'] = '2'
                                                     elif opcion == 3:
                                                         data[0]['idCategoria'] = '3'
-                                                    else:
-                                                        print('\nPor favor, seleccione una opción válida (1 o 3)')
-                                                        break
+                                            else:
+                                                raise Exception ('---> El dato ingresado debe ser un número del 1 al 3')
+                                                break
                                         except KeyboardInterrupt:
                                             print()
 
@@ -398,15 +405,17 @@ def editActivos(id):
                                                         data[0]['idTipoActivo'] = '7'
                                                     if opcion == 8:
                                                         data[0]['idTipoActivo'] = '8'
-                                                    else:
-                                                        print('\nPor favor, seleccione una opción válida (1 o 8)')
-                                                        break
+                                            else:
+                                                raise Exception ('---> El dato ingresado debe ser un número del 1 al 8')
+                                                break
                                         except KeyboardInterrupt:
                                             print()
                                     if opcion == 12:
                                         ValorUnitario = input('\nIngrese el nuevo valor unitario del activo => ')
                                         if re.match(r'^[0-9]+$', ValorUnitario):
                                             data[0]['ValorUnitario'] = ValorUnitario
+                                        else:
+                                            raise Exception('---> El valor unitario del activo solo debe contener digitos')
                                     if opcion == 13:
                                         print("""
                                             Estados de Activos
@@ -429,27 +438,19 @@ def editActivos(id):
                                                         data[0]['idEstado'] = '2'
                                                     if opcion == 3:
                                                         data[0]['idEstado'] = '3'
-                                                else:
-                                                    print('\nPor favor, seleccione una opción válida (0 o 3)')
-                                                    break
+                                            else:
+                                                raise Exception ('---> El dato ingresado debe ser un número del 0 al 3')
+                                                break
                                         except KeyboardInterrupt:
                                             print()
                                 else:
                                     raise Exception ('---> El dato ingresado debe ser un número del 1 al 14')
-                    else:
-                        raise Exception ('---> El dato ingresado debe ser 1 o 2')
-                                            
-                                    else:
-                                        print('\nNo cumple con el formato esperado')
-                                        break
-
                             break
 
                         elif opcion == 2:
                             break
-                        else:
-                            print('\nPor favor, seleccione una opción válida (1 o 2)')
-                            break
+                    else:
+                        raise Exception ('---> El dato ingresado debe ser 1 o 2')
 
             except Exception as error:
                 print('\n---ERROR---')
@@ -464,7 +465,6 @@ def editActivos(id):
     res = peticion.json()
     res['Mensaje'] = '\nDato editado satisfactoriamente'
     print(res['Mensaje'])
-    input('\nPresione Enter para continuar...')
     return [res]
 
 def deleteActivos(id): 
@@ -529,13 +529,15 @@ def menuActivos():
                 opcion = int(opcion)
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
-                        postActivos()
+                        print(tabulate(postActivos(), headers='keys', tablefmt='fancy_grid'))
+                        input('\nPresiona la tecla Enter para continuar...')
                     elif opcion == 2:
                         idActivo = input('\nIngrese el ID del activo que deseas editar => ')
                         print(tabulate(editActivos(idActivo), headers='keys', tablefmt='fancy_grid'))
+                        input('\nPresiona la tecla Enter para continuar...')
                     elif opcion == 3:
                         idActivo = input('\nIngrese el ID del activo que deseas eliminar => ')
-                        print(tabulate(deleteActivos(idActivo), headers='keys', tablefmt='fancy_grid'))
+                        deleteActivos(idActivo)
                     elif opcion == 4:
                         idActivo = input('\nIngrese el ID del activo que deseas buscar => ')
                         print()

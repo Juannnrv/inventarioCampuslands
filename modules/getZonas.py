@@ -58,11 +58,10 @@ def postZonas():
                         break
 
             headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-            peticion = requests.post('http://154.38.171.54:5501/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
+            peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
             res = peticion.json()
             res['Mensaje'] = '\nZona guardada satisfactoriamente'
             print(res['Mensaje'])  
-            input('\nPresione Enter para continuar...')
             return [res]
 
         except Exception as error:
@@ -143,7 +142,6 @@ def editZonas(id):
                 res['Mensaje'] = '\nEl dato fue editado satisfactoriamente'
                 print()
                 print(res['Mensaje'])
-                input('\nPresione la tecla Enter para poder continuar...')
                 return [res]   
             
             except Exception as error:
@@ -172,10 +170,13 @@ def menuZonas():
                 opcion = int(opcion)
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
-                        postZonas()
+                        print(tabulate(postZonas(), headers='keys', tablefmt='fancy_grid'))
+                        input('\nIngresa la tecla Enter para poder continuar...')
                     if opcion == 2:
                         idedit = input('\nIngrese el ID de la zona en Campuslands que deseas editar => ')
-                        editZonas(idedit)
+                        print()
+                        print(tabulate(editZonas(idedit), headers='keys', tablefmt='fancy_grid'))
+                        input('\nIngresa la tecla Enter para poder continuar...')
                     if opcion == 3:
                         while True:
                             os.system('clear')

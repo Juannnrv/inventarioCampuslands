@@ -58,15 +58,22 @@ def postAsignacionActivos():
                         for activo in data:
                             if activo["id"] == idPost:
                                 activo_encontrado = activo
+                                historialActivos = activo.get('historialActivos', [])
+                                
+                                if len(historialActivos) > 0:
+                                    ultimasignacion = historialActivos[-1]
+                                    tipo = ultimasignacion['tipoMov']
+                                else:
+                                    tipo = None
                                 break
 
                         if not activo_encontrado:
                             raise Exception('\n---> El ID del activo no existe')
 
-                        # Validar el estado del activo
-                        if activo_encontrado["idEstado"] != "0" and activo_encontrado['idTipo'] == "2":
+                        # Validar el estado del activo y si se realizo un movimiento anteriormente
+                        if activo_encontrado["idEstado"] != "0" and (tipo == "2" or tipo == "3"):
                             raise Exception('---> No se puede asignar un activo en reparación, dado de baja o ya asignado')
-
+                        
                         NroAsignacion = input('\nIngrese el número de asignación del activo => ')
                         # Validar número de asignación
                         if not re.match(r'[0-9]+$', NroAsignacion):

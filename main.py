@@ -1,5 +1,4 @@
 import os
-import json
 import re
 import modules.getActivos as gA
 import modules.getPersonal as gP

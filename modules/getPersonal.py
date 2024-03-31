@@ -155,9 +155,6 @@ def deletePersonal(id):
                     print(data['Mensaje'])
                     input('\nPresione Enter para continuar...')
 
-
-
-
 def editPersonal(id):
     
     data = PersonasID(id)
@@ -279,7 +276,6 @@ def editPersonal(id):
                                     res['Mensaje'] = '\nEl dato fue editado satisfactoriamente'
                                     print()
                                     print(res['Mensaje'])
-                                    input('\nPresione la tecla Enter para poder continuar...')
                                     return [res]
                                 
                                         
@@ -322,7 +318,8 @@ def menuPersonal():
                         input('\nPresione Enter para continuar...')
                     elif opcion == 2:
                         idedit = input('\nIngrese el ID asignado a la persona que la cual deseas editar un dato en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
-                        editPersonal(idedit)
+                        print(tabulate(editPersonal(idedit), headers='keys', tablefmt='fancy_grid'))
+                        input('\nPresione Enter para continuar...')
                     elif opcion == 3:
                         while True:
                             os.system('clear')

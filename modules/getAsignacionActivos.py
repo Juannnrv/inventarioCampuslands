@@ -26,7 +26,7 @@ def NroAsiganciones(NroAsignacion):
         if val.get("NroAsignacion") == NroAsignacion:
             asignaciones_encontradas.append(val)
             return asignaciones_encontradas
-    print('\nEl número de asignación no existe')
+    print('\nLa asignación no existe')
     return asignaciones_encontradas
 
 
@@ -83,8 +83,9 @@ def postAsignacionActivos():
                                             1. Zona
                                             2. Persona
                             """)
-                        TipoAsignacion = input('\nSeleccione una de las opciones => ')
-                        if re.match(r'^[0-9]+$', TipoAsignacion):
+                        opcion = input('\nSeleccione una de las opciones => ')
+                        if re.match(r'^[0-9]+$', opcion):
+                            opcion = int(opcion)
                             if opcion == 1:
                                 TipoAsignacion = 'Zona'
                             if opcion == 2:
@@ -93,28 +94,30 @@ def postAsignacionActivos():
                             raise Exception('\n---> Tipo de asignación no válido')
                         
                         AsignadoA = input('\nIngresa el ID de la persona o zona a la cual le fue asignado el activo => ')
-                        if not re.match(r'^[0-9]+$', AsignadoA):
+                        if not re.match(r'^[0-9a-z]+$', AsignadoA):
                             raise Exception('\n---> ID de asignación no válido')
 
-                        # Agregar la nueva asignación al activo correspondiente
-                        # Actualizar las asignaciones del activo existente
                         for asignacion in activo_encontrado["asignaciones"]:
                             if asignacion["NroAsignacion"] == NroAsignacion:
                                 raise Exception('\n---> El número de asignación ya existe para este activo')
 
                         activo_encontrado["asignaciones"].append({"NroAsignacion": NroAsignacion, "FechaAsignacion": FechaAsignacion, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
                         
-                        try:    
+                        try:
+                            activo_encontrado["idEstado"] = "1"
+                            print(activo_encontrado)    
                             headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
                             peticion = requests.put(f'http://154.38.171.54:5502/activos/{idPost}', headers=headers, data=json.dumps(activo_encontrado, indent=4))
                             res = peticion.json()
                             res['Mensaje'] = '\nAsignación creada satisfactoriamente'
                             print(res['Mensaje'])  
                             input('\nPresione Enter para continuar...')
+                            break
                         except Exception as error:
                             print('\n---ERROR---')
                             print(error)
                             input('\nPresione Enter para continuar...')
+                            break
                         
                     elif opcion == 2:
                         break

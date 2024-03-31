@@ -2,6 +2,7 @@ import re
 import json
 import os 
 import requests
+import modules.getActivos as gA
 from tabulate import tabulate
 
 # http://154.38.171.54:5502/personas
@@ -15,7 +16,7 @@ def PersonasID(id):
     for val in Personas():
         if val.get('id') == id:
             return [val]
-        
+
 def postPersonal():
     personas = {}
     
@@ -64,26 +65,26 @@ def postPersonal():
                                     raise Exception('---> La Cc o Nit de la persona no cumple, debes ingresar números')
                                 
                             if 'Nombre' not in personas:
-                                nombre = input('\nIngrese el nombre de la persona => ')
+                                nombre = input('Ingrese el nombre de la persona => ')
                                 if re.match(r'^[a-zA-Z0-9\s-]+$', nombre):
                                     personas['Nombre'] = nombre
                                 else:
                                     raise Exception('---> El nombre de la persona no cumple, debes ingresar letras')
                                 
                             if 'Email' not in personas:
-                                email = input('\nIngrese el email de la persona => ')
+                                email = input('Ingrese el email de la persona => ')
                                 if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$', email):
                                     personas['Email'] = email
                                 else:
                                     raise Exception('---> El email de la persona no cumple con el estandar establecido')
-                                                                        
+                                
                             if 'Telefonos' not in personas:
                                 personas['Telefonos'] = []  # Si la lista de teléfonos no existe, créala
 
                                 #MOVIL
                                 # Solicitar al usuario el ID y el número de teléfono móvil
                                 movil_id = input('\nIngrese el ID del móvil de la persona => ')
-                                movil_num = input('\nIngrese el número de móvil de la persona => ')
+                                movil_num = input('Ingrese el número de móvil de la persona => ')
 
                                 # Verificar que el ID y el número de teléfono móvil sean dígitos
                                 if movil_id.isdigit() and movil_num.isdigit():
@@ -95,7 +96,7 @@ def postPersonal():
                                 
                                 # CASA
                                 casa_id = input('\nIngrese el ID del número asignado a la casa de la persona => ')
-                                casa_num = input('\nIngrese el número de la casa de la persona => ')
+                                casa_num = input('Ingrese el número de la casa de la persona => ')
                                 if casa_id.isdigit() and casa_num.isdigit():
                                     personas['Telefonos'].append({"casa": {"id": casa_id, "num": casa_num}})
                                 else:
@@ -103,7 +104,7 @@ def postPersonal():
                                 
                                 #PERSONAL
                                 personal_id = input('\nIngresa el ID del número personal => ')
-                                personal_num = input('\nIngrese el número personal => ')
+                                personal_num = input('Ingrese el número personal => ')
                                 if personal_id.isdigit() and personal_num.isdigit():
                                     personas['Telefonos'].append({"personal": {"id": personal_id, "num": personal_num}})
                                 else:
@@ -111,7 +112,7 @@ def postPersonal():
                                 
                                 #OFICINA
                                 oficina_id = input('\nIngrese el ID asignado a la oficina de la persona => ')
-                                oficina_num = input('\nIngrese el número asignado a la oficina de la persona => ')
+                                oficina_num = input('Ingrese el número asignado a la oficina de la persona => ')
                                 if oficina_id.isdigit() and oficina_num.isdigit():
                                     personas['Telefonos'].append({"oficina": {"id": oficina_id, "num": oficina_num}})
                                 else:
@@ -147,12 +148,29 @@ def postPersonal():
     return [res]
 
 def deletePersonal(id):
-    peticion = requests.delete(f'http://154.38.171.54:5502/personas/{id}')
-    data = peticion.json()
-    data ['Mensaje'] = '\nPersona eliminada satisfactoriamente'
-    print(data['Mensaje'])
-    input('\nPresione Enter para continuar...')
-    return [data]
+    data = gA.Activos()
+    
+    for activo in data:
+        if activo['idEstado'] == "1":
+            
+            asignaciones = activo.get("asignaciones", [])
+            if len(asignaciones):
+                ultimasignacion = asignaciones[-1]
+                asignado = ultimasignacion["AsignadoA"]
+                tipo = ultimasignacion['TipoAsignacion'] 
+                
+                if tipo == "Personal" and asignado == id:
+                    print('\nEsta persona tiene asignado un activo y no puede ser eliminada.')
+                    break
+                else:
+                    peticion_persona = requests.delete(f'http://154.38.171.54:5502/personas/{id}')
+                    data = peticion_persona.json()
+                    data['Mensaje'] = '\nPersona eliminada satisfactoriamente'
+                    print(data['Mensaje'])
+                    input('\nPresione Enter para continuar...')
+
+
+
 
 def editPersonal(id):
     
@@ -319,7 +337,7 @@ def menuPersonal():
                         idedit = input('\nIngrese el ID asignado a la persona que la cual deseas editar un dato en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
                         editPersonal(idedit)
                     elif opcion == 3:
-                        iddelete = input('\nIngrese el ID de la persona que deseas eliminar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        iddelete = input('\nIngrese el ID de la persona que desea eliminar => ')
                         deletePersonal(iddelete)
                     elif opcion == 4:
                         idsearch = input('\nIngrese el ID de la persona que deseas buscar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')

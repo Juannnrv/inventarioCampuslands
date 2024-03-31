@@ -11,9 +11,13 @@ def Zonas():
     return data
 
 def ZonasID(id):
+    idEncontrados = []
     for val in Zonas():
         if val.get('id') == id:
-            return [val]
+            idEncontrados.append(val)
+            return idEncontrados
+    print('\nID no encontrado')
+    return idEncontrados
 
 def postZonas():
     Zonas = {}
@@ -152,7 +156,7 @@ def editZonas(id):
 
 def menuZonas():
     while True:
-        #os.system('clear')
+        os.system('clear')
         print('''
                             ---MENÚ ZONAS---
 
@@ -174,7 +178,7 @@ def menuZonas():
                         editZonas(idedit)
                     if opcion == 3:
                         while True:
-                            #os.system('clear')
+                            os.system('clear')
                             print("""
                             A continuación eliminaras una zona existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
                             

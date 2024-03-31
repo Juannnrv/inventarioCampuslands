@@ -13,9 +13,13 @@ def Personas():
     return data
 
 def PersonasID(id):
+    idEncontrados = []
     for val in Personas():
         if val.get('id') == id:
-            return [val]
+            idEncontrados.append(val)
+            return idEncontrados
+    print('\nID no encontrado')
+    return idEncontrados
 
 def postPersonal():
     personas = {}

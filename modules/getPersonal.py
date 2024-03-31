@@ -38,24 +38,6 @@ def postPersonal():
                     if opcion == 1:
                         while True:
                             os.system('clear')
-                            # try:
-                            #     if 'id' not in personas:
-                            #         idpersona = input('Ingrese el ID de la persona => ')
-                            #         if idpersona.isdigit():
-                            #             idpersona = int(idpersona)
-                            #             if idpersona > 0:
-                            #                 data = PersonasID(idpersona)
-                            #                 if data:
-                            #                     raise Exception('El ID de la persona ya existe')
-                            #                 else:
-                            #                     personas['id'] = idpersona
-                            #                     break
-                            #             else:
-                            #                 raise Exception('---> El ID de la persona debe ser un número positivo')
-                            #         else:
-                            #             raise Exception('---> El ID de la persona no cumple con el estándar establecido')
-                            # except Exception as error:
-                            #     print(error)
 
                             if 'nroId (CC, Nit)' not in personas:
                                 nroId = input('\nIngrese la Cc o Nit de la persona => ')
@@ -332,15 +314,42 @@ def menuPersonal():
                 opcion = int(opcion)
                 if opcion >= 0 and opcion <= 5:
                     if opcion == 1:
-                        postPersonal()
+                        print(tabulate(postPersonal(), headers='keys', tablefmt='fancy_grid'))
+                        input('\nPresione Enter para continuar...')
                     elif opcion == 2:
                         idedit = input('\nIngrese el ID asignado a la persona que la cual deseas editar un dato en SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
                         editPersonal(idedit)
                     elif opcion == 3:
-                        iddelete = input('\nIngrese el ID de la persona que desea eliminar => ')
-                        deletePersonal(iddelete)
+                        while True:
+                            os.system('clear')
+                            print("""
+                            A continuación eliminaras un personal existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
+                            
+                                                        ¿Deseas continuar?
+                                    
+                                                            1. Si
+                                                            2. No
+                    """)
+                            opcion = input('\nSeleccione una de las opciones => ')
+                            try:
+                                if re.match(r'[0-9]+$', opcion):
+                                    opcion = int(opcion)
+                                    if opcion >= 1 and opcion <= 2:
+                                        if opcion == 1:
+                                            iddelete = input('\nIngrese el ID de la persona que desea eliminar => ')
+                                            deletePersonal(iddelete)
+                                        elif opcion == 2:
+                                            break
+                                    else:
+                                        raise Exception ('---> El dato ingresado debe ser 1 o 2 ')
+                                else:
+                                    raise Exception ('---> El dato ingresado debe ser 1 o 2 ')        
+                            except Exception as error:
+                                print('\n---ERROR---')
+                                print(error)
+                                break
                     elif opcion == 4:
-                        idsearch = input('\nIngrese el ID de la persona que deseas buscar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
+                        idsearch = input('\nIngresa el ID de la persona que deseas buscar de SISTEMA G&C DE INVENTARIO CAMPUSLANDS => ')
                         print()
                         print(tabulate(PersonasID(idsearch), headers='keys', tablefmt='fancy_grid'))
                         input('\nPresione Enter para continuar...')

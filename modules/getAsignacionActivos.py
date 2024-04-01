@@ -48,10 +48,10 @@ def postAsignacionActivos():
         print("""
         A continuación agregaras una nueva asignación a un activo existente en SISTEMA G&C DE INVENTARIO CAMPUSLANDS
         
-                                                ¿Deseas continuar?
+                                                👾 ¿Deseas continuar? 👾
                             
-                                                    1. Si
-                                                    2. No
+                                                    1. ✅ Si
+                                                    2. ❌ No
 """)
         opcion = input('\nSeleccione una de las opciones => ')
         try:
@@ -139,10 +139,15 @@ def menuAsignacionActivos():
     while True:
         os.system('clear')
         print('''
-                            ---MENÚ ASIGNACIÓN ACTIVOS---
+                        
+                            --- MENÚ ASIGNACIÓN ACTIVOS ---
+                        
 
-                            1. Crear asignación
-                            2. Buscar asignación
+                            1. 🪄  Crear asignación
+                            
+                            2. 🗂️  Buscar asignación
+                            
+                            
                             3. Regresar al menú principal
 ''')
         try:

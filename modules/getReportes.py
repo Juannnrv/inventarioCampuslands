@@ -101,13 +101,21 @@ def menuReportes():
     while True:
         os.system('clear')
         print('''
-                            ---MENÚ REPORTES---
-
-                    1. Listar todos los activos
-                    2. Listar activos por categoría
-                    3. Listar activos dados de baja por daño
-                    4. Listar activos y asignación
-                    5. Listar historial de mov. de activo
+                        
+                            --- MENÚ REPORTES ---
+                        
+                        
+                    1. 🗒️  Listar todos los activos
+                    
+                    2. 🗒️  Listar activos por categoría
+                    
+                    3. 🗒️  Listar activos dados de baja por daño
+                    
+                    4. 🗒️  Listar activos y asignación
+                    
+                    5. 🗒️  Listar historial de mov. de activo
+                    
+                    
                     6. Regresar al menú  principal
 ''')
         try:
@@ -126,8 +134,8 @@ def menuReportes():
                             
                                         ¿Deseas observar las demas categorias?
                                 
-                                                        1. Si
-                                                        2. No
+                                                    1. ✅ Si
+                                                    2. ❌ No
 """)
                             opcion = input('\nSeleccione una de las opciones => ')
                             try:

@@ -29,10 +29,10 @@ def postPersonal():
         print("""
         A continuación agregaras una nueva persona a SISTEMA G&C DE INVENTARIO CAMPUSLANDS
         
-                                    ¿Deseas continuar?
+                                    👾 ¿Deseas continuar? 👾
                 
-                                        1. Si
-                                        2. No
+                                        1. ✅ Si
+                                        2. ❌ No
 """)
         opcion = input('\nSeleccione una de las opciones => ')
         try:
@@ -164,10 +164,10 @@ def editPersonal(id):
             print("""
             A continuación editaras un activo existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                                        ¿Deseas continuar?
+                                        👾 ¿Deseas continuar? 👾
                     
-                                            1. Si
-                                            2. No
+                                            1. ✅ Si
+                                            2. ❌ No
     """)
             opcion = input('\nSeleccione una de las opciones => ')
             try:
@@ -179,7 +179,7 @@ def editPersonal(id):
                     ¿Qué dato desea actualizar?
 
                     1. Número de ID (CC, Nit)
-                    2. Nombre 
+                    2. ❌ Nombre 
                     3. Email
                     
                     ---Telefonos---
@@ -297,12 +297,19 @@ def menuPersonal():
     while True:
         os.system('clear')
         print('''
-                            ---MENÚ PERSONAL---
+                            
+                        --- MENÚ PERSONAL ---
+                            
 
-                        1. Agregar
-                        2. Editar
-                        3. Eliminar
-                        4. Buscar
+                        1. 🪄  Agregar
+                        
+                        2. 🖌️  Editar
+                        
+                        3. 👻 Eliminar
+                        
+                        4. 🗂️  Buscar
+                        
+                        
                         5. Regresar al menú principal
 ''')
         try:
@@ -323,10 +330,10 @@ def menuPersonal():
                             print("""
                             A continuación eliminaras un personal existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
                             
-                                                        ¿Deseas continuar?
+                                                        👾 ¿Deseas continuar? 👾
                                     
-                                                            1. Si
-                                                            2. No
+                                                            1. ✅ Si
+                                                            2. ❌ No
                     """)
                             opcion = input('\nSeleccione una de las opciones => ')
                             try:

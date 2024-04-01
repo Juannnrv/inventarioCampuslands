@@ -26,10 +26,10 @@ def postZonas():
         print("""
         A continuación agregaras una nueva zona a SISTEMA G&C DE INVENTARIO CAMPUSLANDS
         
-                                ¿Deseas continuar?
+                                👾 ¿Deseas continuar? 👾
             
-                                    1. Si
-                                    2. No
+                                    1. ✅ Si
+                                    2. ❌ No
 """)
         opcion = input('\nSeleccione una de las opciones => ')
         try:
@@ -102,10 +102,10 @@ def editZonas(id):
             print("""
             A continuación editaras un dato de una zona existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                                            ¿Deseas continuar?
+                                            👾 ¿Deseas continuar? 👾
                         
-                                                1. Si
-                                                2. No
+                                                1. ✅ Si
+                                                2. ❌ No
     """)
             opcion = input('\nSeleccione una de las opciones => ')
             try:
@@ -155,12 +155,19 @@ def menuZonas():
     while True:
         os.system('clear')
         print('''
-                            ---MENÚ ZONAS---
+                        
+                        --- MENÚ ZONAS ---
+                        
 
-                        1. Agregar
-                        2. Editar
-                        3. Eliminar
-                        4. Buscar
+                        1. 🪄  Agregar
+                        
+                        2. 🖌️  Editar
+                        
+                        3. 👻 Eliminar
+                        
+                        4. 🗂️  Buscar
+                        
+                        
                         5. Regresar al menú principal
 ''')
         try:
@@ -182,10 +189,10 @@ def menuZonas():
                             print("""
                             A continuación eliminaras una zona existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
                             
-                                                        ¿Deseas continuar?
+                                                        👾 ¿Deseas continuar? 👾
                                     
-                                                            1. Si
-                                                            2. No
+                                                            1. ✅ Si
+                                                            2. ❌ No
                     """)
                             opcion = input('\nSeleccione una de las opciones => ')
                             try:

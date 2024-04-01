@@ -13,15 +13,24 @@ if __name__ == "__main__":
     while True:
         os.system('clear')
         print('''
-                    ---SISTEMA G&C DE INVENTARIO CAMPUSLANDS---
-
-                            1. Activos
-                            2. Personal
-                            3. Zonas
-                            4. Asignación de activos
-                            5. Reportes
-                            6. Movimiento de activos
-                            7. Salir
+                    
+                        --- SISTEMA G&C DE INVENTARIO CAMPUSLANDS --- 
+                    
+                    
+                                1. 💻 Activos
+                                
+                                2. 👨‍💼 Personal
+                                
+                                3. 🏢 Zonas
+                                
+                                4. 🧑‍💻 Asignación de activos
+                                
+                                5. ✉️  Reportes
+                                
+                                6. 🗒️  Movimiento de activos
+                                
+                                
+                                7. Salir
 ''')
         opcion = input('\nSeleccione una de las opciones => ')
         if re.match(r'[0-9]+$', opcion):

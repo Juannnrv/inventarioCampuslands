@@ -26,7 +26,7 @@ def retornarActivo(id):
                     
                                             ¿Deseas continuar?
                         
-                                                1. Si
+                                                1. ✅ Si
                                                 2. No
             """)
                     opcion = input('\nSeleccione una de las opciones => ')
@@ -86,7 +86,7 @@ def dardebaja(id):
                     
                                             ¿Deseas continuar?
                         
-                                                1. Si
+                                                1. ✅ Si
                                                 2. No
             """)
                     opcion = input('\nSeleccione una de las opciones => ')
@@ -148,7 +148,7 @@ def enviaraGarantia(id):
                     
                                             ¿Deseas continuar?
                         
-                                                1. Si
+                                                1. ✅ Si
                                                 2. No
             """)
                     opcion = input('\nSeleccione una de las opciones => ')
@@ -209,12 +209,19 @@ def menuMovimientoActivos():
     while True:
         os.system('clear')
         print('''
+            
                             ---MENÚ MOVIMIENTOS DE ACTIVOS---
+                            
 
-                            1. Retorno de activo
-                            2. Dar de baja activo
-                            3. Cambiar asignación de activo
-                            4. Enviar a garantía de activo
+                            1. 🖥️   Retorno de activo
+                            
+                            2. 🛠️   Dar de baja activo
+                            
+                            3. 📝  Cambiar asignación de activo
+                            
+                            4. ⚙️   Enviar a garantía de activo
+                            
+                            
                             5. Regresar al menù principal
 ''')
         try:

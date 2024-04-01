@@ -32,10 +32,11 @@ def postActivos():
         print("""
         A continuación agregaras un nuevo activo a SISTEMA G&C DE INVENTARIO CAMPUSLANDS
         
-                                ¿Deseas continuar?
+                                👾👾 ¿Deseas continuar? 👾👾
             
-                                    1. Si
-                                    2. No
+                                    1. ✅ Si
+                                    
+                                    2. ❌ No
 """)
         opcion = input('\nSeleccione una de las opciones => ')
         try:
@@ -70,8 +71,8 @@ def postActivos():
                                 print("""
                                     ¿Desea asignarle el número de serial a su activo?
                             
-                                                    1. Si
-                                                    2. No
+                                                    1. ✅ Si
+                                                    2. ❌ No
                                 """)
                                 opcion = input('\nSeleccione una de las opciones => ')
                                 try:
@@ -223,10 +224,10 @@ def editActivos(id):
         print("""
         A continuación editarás un activo existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                                ¿Deseas continuar?
+                                👾 ¿Deseas continuar? 👾
                 
-                                    1. Si
-                                    2. No
+                                    1. ✅ Si
+                                    2. ❌ No
         """)
         opcion = input('\nSeleccione una de las opciones => ')
 
@@ -276,8 +277,8 @@ def editActivos(id):
                                 print("""
                                 ¿Desea asignarle un nuevo número de serial a un activo ya existente?
         
-                                                        1. Si
-                                                        2. No
+                                                        1. ✅ Si
+                                                        2. ❌ No
                                 """)
                                 opcion_serial = input('\nSeleccione una de las opciones => ')
                                 if opcion_serial == '1':
@@ -453,10 +454,10 @@ def deleteActivos(id):
             print("""
             A continuación eliminaras un activo existente de SISTEMA G&C DE INVENTARIO CAMPUSLANDS
             
-                                        ¿Deseas continuar?
+                                        👾 ¿Deseas continuar? 👾
                     
-                                            1. Si
-                                            2. No
+                                            1. ✅ Si
+                                            2. ❌ No
     """)
             opcion = input('\nSeleccione una de las opciones => ')
             try:
@@ -499,12 +500,19 @@ def menuActivos():
     while True:
         os.system('clear')
         print('''
-                            ---MENÚ ACTIVOS---
-
-                        1. Agregar
-                        2. Editar
-                        3. Eliminar
-                        4. Buscar
+                        
+                        --- MENÚ ACTIVOS ---
+                        
+                        
+                        1. 🪄  Agregar
+                        
+                        2. 🖌️  Editar
+                        
+                        3. 👻 Eliminar
+                        
+                        4. 🗂️  Buscar
+                        
+                        
                         5. Regresar al menú principal
 ''')
         try:

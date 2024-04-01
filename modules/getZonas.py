@@ -93,7 +93,6 @@ def deleteZonas(id):
                     print(res['Mensaje'])
                     input('\nPresiona la tecla Enter para poder continuar...')
                     return [res]
-                    
 
 def editZonas(id):
     data = ZonasID(id)
@@ -210,7 +209,7 @@ def menuZonas():
                         idsearch = input('\nIngresa el ID de la zona en Campuslands que deseas buscar => ')
                         print()
                         print(tabulate(ZonasID(idsearch), headers='keys', tablefmt='fancy_grid'))
-                        input('\nIngresa la tecla Enter para poder continuar...')
+                        input('\nPresiona la tecla Enter para poder continuar...')
                     if opcion == 5:
                         break
 

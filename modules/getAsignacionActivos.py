@@ -3,7 +3,15 @@ import json
 import re
 import requests
 from tabulate import tabulate
+import datetime
+import shortuuid
+import random
 import modules.getActivos as gA
+
+# Obtener la fecha actual
+fecha_actual = datetime.date.today()
+
+fecha_formateada = fecha_actual.strftime("%y-%m-%d")
 
 def DataAsignaciones():
     result = []
@@ -74,16 +82,6 @@ def postAsignacionActivos():
                         if activo_encontrado["idEstado"] != "0" and (tipo == "2" or tipo == "3"):
                             raise Exception('---> No se puede asignar un activo en reparación, dado de baja o ya asignado')
                         
-                        NroAsignacion = input('\nIngrese el número de asignación del activo => ')
-                        # Validar número de asignación
-                        if not re.match(r'[0-9]+$', NroAsignacion):
-                            raise Exception('\n---> El número de asignación no es válido')
-
-                        FechaAsignacion = input('\nIngrese la fecha de asignación (YYYY-MM-DD) => ')
-                        # Validar fecha de asignación
-                        if not re.match(r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$', FechaAsignacion):
-                            raise Exception('\n---> La fecha de asignación no tiene el formato correcto')
-                        
                         print("""
                             ¿Se le asignó el activo a una Zona o Persona?
                             
@@ -104,11 +102,7 @@ def postAsignacionActivos():
                         if not re.match(r'^[0-9a-z]+$', AsignadoA):
                             raise Exception('\n---> ID de asignación no válido')
 
-                        for asignacion in activo_encontrado["asignaciones"]:
-                            if asignacion["NroAsignacion"] == NroAsignacion:
-                                raise Exception('\n---> El número de asignación ya existe para este activo')
-
-                        activo_encontrado["asignaciones"].append({"NroAsignacion": NroAsignacion, "FechaAsignacion": FechaAsignacion, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
+                        activo_encontrado["asignaciones"].append({"NroAsignacion": shortuuid.random(length=4), "FechaAsignacion": fecha_formateada, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
                         
                         try:
                             activo_encontrado["idEstado"] = "1"

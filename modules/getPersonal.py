@@ -175,7 +175,6 @@ def editPersonal(id):
                     opcion = int(opcion)
                     if opcion >= 1 and opcion <= 2:
                         if opcion == 1:
-                            
                             print("""
                     ¿Qué dato desea actualizar?
 
@@ -292,8 +291,6 @@ def editPersonal(id):
                 print('\n---ERROR---')
                 print(error)
                 break
-
-
 
 
 def menuPersonal():

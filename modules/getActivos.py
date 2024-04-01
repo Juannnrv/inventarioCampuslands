@@ -79,7 +79,7 @@ def postActivos():
                                     if re.match(r'[A-Z0-9]+$', opcion):
                                         opcion = int(opcion)
                                         if opcion == 1:
-                                            NroSerial = input('Ingrese la número del serial asignado al activo => ')
+                                            NroSerial = input('Ingrese el número del serial asignado al activo => ')
                                             if re.match(r'^[a-zA-Z0-9\s-]+$', NroSerial):
                                                 Activos['NroSerial'] = NroSerial
                                         elif opcion == 2:
@@ -421,9 +421,9 @@ def editActivos(id):
                         try:
                             peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                             res = peticion.json()
+                            res['Mensaje'] = '\nDato editado satisfactoriamente...'
                             if 'Mensaje' in res:
                                 print(res['Mensaje'])
-                            print('\nDato editado satisfactoriamente...')
                             return [res]
                         except Exception as error:
                             print('\n---ERROR---')
@@ -487,6 +487,7 @@ def deleteActivos(id):
         res = peticion.json()
         if 'Mensaje' in res:
             print(res['Mensaje'])
+        print('\nDato eliminado satisfactoriamente')
         input('\nPresione Enter para continuar...')
         return [res]
     except Exception as error:
@@ -540,6 +541,3 @@ def menuActivos():
                     
         except KeyboardInterrupt:
             print('\nRegresando al menú principal...')
-                    
-
-                    

@@ -82,7 +82,7 @@ def dardebaja(id):
             while True:
                     os.system('clear')
                     print("""
-                    A continuación retornarás un activo en SISTEMA G&C DE INVENTARIO CAMPUSLANDS
+                    A continuación darás de baja un activo en SISTEMA G&C DE INVENTARIO CAMPUSLANDS
                     
                                             ¿Deseas continuar?
                         
@@ -142,7 +142,7 @@ def cambiarAsignacion(id):
             while True:
                     os.system('clear')
                     print("""
-                    A continuación enviaras un activo a garantía en SISTEMA G&C DE INVENTARIO CAMPUSLANDS
+                    A continuación cambiaras de asignación un activo en SISTEMA G&C DE INVENTARIO CAMPUSLANDS
                     
                                             ¿Deseas continuar?
                         

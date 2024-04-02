@@ -9,9 +9,7 @@ import random
 import modules.getActivos as gA
 
 # Obtener la fecha actual
-fecha_actual = datetime.date.today()
-
-fecha_formateada = fecha_actual.strftime("%y-%m-%d")
+fecha_actual = datetime.date.today().isoformat()
 
 def DataAsignaciones():
     result = []
@@ -102,7 +100,7 @@ def postAsignacionActivos():
                         if not re.match(r'^[0-9a-z]+$', AsignadoA):
                             raise Exception('\n---> ID de asignación no válido')
 
-                        activo_encontrado["asignaciones"].append({"NroAsignacion": shortuuid.random(length=4), "FechaAsignacion": fecha_formateada, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
+                        activo_encontrado["asignaciones"].append({"NroAsignacion": shortuuid.random(length=4), "FechaAsignacion": fecha_actual, "TipoAsignacion": TipoAsignacion, "AsignadoA": AsignadoA})
                         
                         try:
                             activo_encontrado["idEstado"] = "1"

@@ -10,9 +10,7 @@ import random
 from tabulate import tabulate
 
 # Obtener la fecha actual
-fecha_actual = datetime.date.today()
-
-fecha_formateada = fecha_actual.strftime("%y-%m-%d")
+fecha_actual = datetime.date.today().isoformat()
 
 def retornarActivo(id):
     # Obtener la información del activo con el ID proporcionado
@@ -40,7 +38,7 @@ def retornarActivo(id):
                                     idRespMov = input('\nIngrese el ID de la persona responsable del movimiento => ')
                                     if gP.PersonasID(idRespMov):
                                         añadirhistorial["NroId"] = shortuuid.random(length=4)
-                                        añadirhistorial["fecha"] = fecha_formateada
+                                        añadirhistorial["fecha"] = fecha_actual
                                         añadirhistorial["tipoMov"] = "0"  # Creamos el idTipo 0 para referirnos que el Activo fue RETORNADO
                                         añadirhistorial["idRespMov"] = idRespMov
                                         diccsolo = data[0]

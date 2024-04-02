@@ -2,7 +2,15 @@ import os
 import json
 import re
 import requests
+import datetime
+import shortuuid
+import random
 from tabulate import tabulate
+
+# Obtener la fecha actual
+fecha_actual = datetime.date.today()
+
+fecha_formateada = fecha_actual.strftime("%y-%m-%d")
 
 def Activos():
     # http://154.38.171.54:5502/activos
@@ -467,6 +475,16 @@ def deleteActivos(id):
                         if opcion == 1:
                             if len(data[0]['asignaciones']) == 0:
                                 data[0]['idEstado'] = "0"
+                                
+                                añadirhistorial = {}
+                                añadirhistorial["NroId"] = shortuuid.random(length=4)
+                                añadirhistorial["fecha"] = fecha_formateada
+                                añadirhistorial["tipoMov"] = "2"  
+                                añadirhistorial["idRespMov"] = "1"
+                                diccsolo = data[0]
+                                historialActivos = diccsolo["historialActivos"]
+                                historialActivos.append(añadirhistorial)
+                                data[0]['asignaciones'] = []
                             else:
                                 raise Exception('El activo está asignado a una persona o zona y no se puede eliminar.')
                         if opcion == 2:

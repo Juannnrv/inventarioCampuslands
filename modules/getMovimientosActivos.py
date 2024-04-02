@@ -98,7 +98,7 @@ def dardebaja(id):
                                     idRespMov = input('\nIngrese el ID de la persona responsable del movimiento => ')
                                     if gP.PersonasID(idRespMov):
                                         añadirhistorial["NroId"] = shortuuid.random(length=4)
-                                        añadirhistorial["fecha"] = fecha_formateada
+                                        añadirhistorial["fecha"] = fecha_actual
                                         añadirhistorial["tipoMov"] = "2" 
                                         añadirhistorial["idRespMov"] = idRespMov
                                         diccsolo = data[0]
@@ -183,7 +183,7 @@ def cambiarAsignacion(id):
                                     idRespMov = input('\nIngrese el ID de la persona responsable del movimiento => ')
                                     if gP.PersonasID(idRespMov):
                                         añadirhistorial["NroId"] = shortuuid.random(length=4)
-                                        añadirhistorial["fecha"] = fecha_formateada
+                                        añadirhistorial["fecha"] = fecha_actual
                                         añadirhistorial["tipoMov"] = str(opcion)
                                         añadirhistorial["idRespMov"] = idRespMov
                                         diccsolo = data[0]
@@ -246,7 +246,7 @@ def enviaraGarantia(id):
                                     idRespMov = input('\nIngrese el ID de la persona responsable del movimiento => ')
                                     if gP.PersonasID(idRespMov):
                                         añadirhistorial["NroId"] = shortuuid.random(length=4)
-                                        añadirhistorial["fecha"] = fecha_formateada
+                                        añadirhistorial["fecha"] = fecha_actual
                                         añadirhistorial["tipoMov"] = "3" 
                                         añadirhistorial["idRespMov"] = idRespMov
                                         diccsolo = data[0]

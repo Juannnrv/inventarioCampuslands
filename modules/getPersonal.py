@@ -179,7 +179,7 @@ def editPersonal(id):
                     ¿Qué dato desea actualizar?
 
                     1. Número de ID (CC, Nit)
-                    2. ❌ Nombre 
+                    2. Nombre 
                     3. Email
                     
                     ---Telefonos---

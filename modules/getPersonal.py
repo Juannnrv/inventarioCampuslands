@@ -52,7 +52,7 @@ def postPersonal():
                                 
                             if 'Nombre' not in personas:
                                 nombre = input('Ingrese el nombre de la persona => ')
-                                if re.match(r'^[a-zA-Z0-9\s-]+$', nombre):
+                                if re.match(r'^[a-zA-Z\s-]+$', nombre):
                                     personas['Nombre'] = nombre
                                 else:
                                     raise Exception('---> El nombre de la persona no cumple, debes ingresar letras')

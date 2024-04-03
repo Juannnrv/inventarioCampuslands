@@ -48,7 +48,7 @@ def retornarActivo(id):
                                         data[0]['asignaciones'] = []
 
                                         # Enviar la solicitud PUT para actualizar el activo
-                                        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                                        peticion = requests.put(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                                         res = peticion.json()
                                         if 'Mensaje' in res:
                                             print(res['Mensaje'])
@@ -108,7 +108,7 @@ def dardebaja(id):
                                         data[0]['asignaciones'] = []
 
                                         # Enviar la solicitud PUT para actualizar el activo
-                                        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                                        peticion = requests.put(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                                         res = peticion.json()
                                         if 'Mensaje' in res:
                                             print(res['Mensaje'])
@@ -196,7 +196,7 @@ def cambiarAsignacion(id):
                                         data[0]['asignaciones'] = []
 
                                         # Enviar la solicitud PUT para actualizar el activo
-                                        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                                        peticion = requests.put(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                                         res = peticion.json()
                                         if 'Mensaje' in res:
                                             print(res['Mensaje'])
@@ -256,7 +256,7 @@ def enviaraGarantia(id):
                                         data[0]['asignaciones'] = []
 
                                         # Enviar la solicitud PUT para actualizar el activo
-                                        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                                        peticion = requests.put(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                                         res = peticion.json()
                                         if 'Mensaje' in res:
                                             print(res['Mensaje'])

@@ -5,10 +5,10 @@ import requests
 import modules.getActivos as gA
 from tabulate import tabulate
 
-# http://154.38.171.54:5502/personas
+# http://154.38.171.54:5501/personas
 
 def Personas():
-    peticion = requests.get('http://154.38.171.54:5502/personas')
+    peticion = requests.get('http://154.38.171.54:5501/personas')
     data = peticion.json()
     return data
 
@@ -105,7 +105,7 @@ def postPersonal():
                                     raise Exception('---> El ID y el número de móvil deben contener solo dígitos.')
                                 
                                 headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-                                peticion = requests.post('http://154.38.171.54:5502/personas', headers=headers, data=json.dumps(personas, indent=4))
+                                peticion = requests.post('http://154.38.171.54:5501/personas', headers=headers, data=json.dumps(personas, indent=4))
                                 res = peticion.json()
                                 res ['Mensaje'] = '\nPersona guardada satisfactoriamente'
                                 print(res['Mensaje'])
@@ -126,7 +126,7 @@ def postPersonal():
             break
 
     headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-    peticion = requests.post('http://154.38.171.54:5502/personas', headers=headers, data=json.dumps(personas, indent=4))
+    peticion = requests.post('http://154.38.171.54:5501/personas', headers=headers, data=json.dumps(personas, indent=4))
     res = peticion.json()
     res ['Mensaje'] = '\nPersona guardada satisfactoriamente'
     print(res['Mensaje'])
@@ -149,7 +149,7 @@ def deletePersonal(id):
                     print('\nEsta persona tiene asignado un activo y no puede ser eliminada.')
                     break
                 else:
-                    peticion_persona = requests.delete(f'http://154.38.171.54:5502/personas/{id}')
+                    peticion_persona = requests.delete(f'http://154.38.171.54:5501/personas/{id}')
                     data = peticion_persona.json()
                     data['Mensaje'] = '\nPersona eliminada satisfactoriamente'
                     print(data['Mensaje'])
@@ -270,7 +270,7 @@ def editPersonal(id):
                                         else:
                                             raise Exception('---> El número debe contener solo dígitos.')
                                         
-                                    peticion = requests.put(f"http://154.38.171.54:5502/personas/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                                    peticion = requests.put(f"http://154.38.171.54:5501/personas/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                                     res = peticion.json()
                                     res['Mensaje'] = '\nEl dato fue editado satisfactoriamente'
                                     print()

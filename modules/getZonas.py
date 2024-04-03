@@ -6,7 +6,7 @@ import modules.getActivos as gA
 from tabulate import tabulate
 
 def Zonas():
-    peticion = requests.get('http://154.38.171.54:5502/zonas')
+    peticion = requests.get('http://154.38.171.54:5501/zonas')
     data = peticion.json()
     return data
 
@@ -58,7 +58,7 @@ def postZonas():
                         break
 
             headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-            peticion = requests.post('http://154.38.171.54:5502/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
+            peticion = requests.post('http://154.38.171.54:5501/zonas', headers=headers, data=json.dumps(Zonas, indent=4))
             res = peticion.json()
             res['Mensaje'] = '\nZona guardada satisfactoriamente'
             print(res['Mensaje'])  
@@ -86,7 +86,7 @@ def deleteZonas(id):
                     print('\nEsta zona tiene asignado un activo y no puede ser eliminada.')
                     break
                 else:
-                    peticion = requests.delete(f'http://154.38.171.54:5502/zonas/{id}')
+                    peticion = requests.delete(f'http://154.38.171.54:5501/zonas/{id}')
                     res = peticion.json()
                     res['Mensaje'] = 'Zona eliminada satisfactoriamente'
                     print()
@@ -136,7 +136,7 @@ def editZonas(id):
                 else:
                     raise Exception ('---> El dato ingresado debe ser 1 o 2 ')     
 
-                peticion = requests.put(f"http://154.38.171.54:5502/zonas/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                peticion = requests.put(f"http://154.38.171.54:5501/zonas/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                 res = peticion.json()
                 res['Mensaje'] = '\nEl dato fue editado satisfactoriamente'
                 print()

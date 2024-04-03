@@ -105,7 +105,7 @@ def postAsignacionActivos():
                         try:
                             activo_encontrado["idEstado"] = "1"
                             headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-                            peticion = requests.put(f'http://154.38.171.54:5502/activos/{idPost}', headers=headers, data=json.dumps(activo_encontrado, indent=4))
+                            peticion = requests.put(f'http://154.38.171.54:5501/activos/{idPost}', headers=headers, data=json.dumps(activo_encontrado, indent=4))
                             res = peticion.json()
                             res['Mensaje'] = '\nAsignación creada satisfactoriamente'
                             print(res['Mensaje'])  

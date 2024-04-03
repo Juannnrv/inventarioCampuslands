@@ -46,15 +46,15 @@ def CategoriasActivo():
                 opcion = int(opcion)
                 if opcion >= 0 and opcion <= 3:
                     if opcion == 1:
-                        peticion = requests.get('http://154.38.171.54:5502/activos?idCategoria=1')
+                        peticion = requests.get('http://154.38.171.54:5501/activos?idCategoria=1')
                         data = peticion.json()
                         return data
                     elif opcion == 2:
-                        peticion = requests.get('http://154.38.171.54:5502/activos?idCategoria=2')
+                        peticion = requests.get('http://154.38.171.54:5501/activos?idCategoria=2')
                         data = peticion.json()
                         return data
                     elif opcion == 3:
-                        peticion = requests.get('http://154.38.171.54:5502/activos?idCategoria=3')
+                        peticion = requests.get('http://154.38.171.54:5501/activos?idCategoria=3')
                         data = peticion.json()
                         return data 
                     elif opcion == 0:
@@ -79,7 +79,7 @@ def Allasignacioens():
         return result
 
 def ActivosDadosDeBaja():
-    peticion = requests.get('http://154.38.171.54:5502/activos?idEstado=2')
+    peticion = requests.get('http://154.38.171.54:5501/activos?idEstado=2')
     data = peticion.json()
     return data
 

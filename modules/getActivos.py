@@ -13,8 +13,8 @@ fecha_actual = datetime.date.today()
 fecha_formateada = fecha_actual.strftime("%y-%m-%d")
 
 def Activos():
-    # http://154.38.171.54:5502/activos
-    peticion = requests.get('http://154.38.171.54:5502/activos')
+    # http://154.38.171.54:5501/activos
+    peticion = requests.get('http://154.38.171.54:5501/activos')
     data = peticion.json()
     return data
 
@@ -209,7 +209,7 @@ def postActivos():
     try:
         
         headers = {'Content-Type': 'application/json', 'charset': 'UTF-8'}
-        peticion = requests.post('http://154.38.171.54:5502/activos', headers=headers, data=json.dumps(Activos, indent=4))
+        peticion = requests.post('http://154.38.171.54:5501/activos', headers=headers, data=json.dumps(Activos, indent=4))
         res = peticion.json()
         res ['Mensaje'] = '\nActivo guardado satisfactoriamente'
         print(res['Mensaje'])
@@ -427,7 +427,7 @@ def editActivos(id):
                                     print('---> Por favor, ingrese un número.')
 
                         try:
-                            peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+                            peticion = requests.put(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
                             res = peticion.json()
                             res['Mensaje'] = '\nDato editado satisfactoriamente...'
                             if 'Mensaje' in res:
@@ -501,7 +501,7 @@ def deleteActivos(id):
                 break
 
     try:
-        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
+        peticion = requests.put(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(data[0]).encode("UTF-8"))
         res = peticion.json()
         if 'Mensaje' in res:
             print(res['Mensaje'])
